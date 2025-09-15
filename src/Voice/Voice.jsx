@@ -1,11 +1,13 @@
 import React, { useState, useRef } from "react";
-import { Mic, Loader2 } from "lucide-react"; // simple icons
+import { Mic, Loader2, Volume2 } from "lucide-react";
 import "./voice.css";
 
-export default function VoiceRecorder({personality}) {
+export default function VoiceRecorder({ personality }) {
   const [recording, setRecording] = useState(false);
   const [loading, setLoading] = useState(false);
   const [audioUrl, setAudioUrl] = useState(null);
+  const [message, setMessage] = useState(""); // AI text reply
+  const [speaking, setSpeaking] = useState(false);
   const mediaRecorderRef = useRef(null);
 
   const startRecording = async () => {
@@ -17,28 +19,36 @@ export default function VoiceRecorder({personality}) {
       mediaRecorderRef.current.ondataavailable = (e) => chunks.push(e.data);
 
       mediaRecorderRef.current.onstop = async () => {
-        setLoading(true); // show delivery animation
+        setLoading(true);
+        setMessage(""); // reset previous reply
+        setSpeaking(false);
+
         const blob = new Blob(chunks, { type: "audio/webm" });
         const formData = new FormData();
         formData.append("file", blob, "voice.webm");
+        formData.append("personality", personality);
 
         const res = await fetch("http://127.0.0.1:5000/upload", {
           method: "POST",
           body: formData,
-          personality:personality
         });
 
         const data = await res.json();
         console.log("Upload Response:", data);
 
         if (data.filename) {
+          setMessage(data.message); // show AI’s text reply
           const audioUrl = `http://127.0.0.1:5000/uploads/${data.filename}`;
           setAudioUrl(audioUrl);
 
           const audio = new Audio(audioUrl);
+          setSpeaking(true);
           audio.play();
 
-          audio.onended = () => setLoading(false);
+          audio.onended = () => {
+            setSpeaking(false);
+            setLoading(false);
+          };
         } else {
           setLoading(false);
         }
@@ -59,35 +69,56 @@ export default function VoiceRecorder({personality}) {
   };
 
   return (
-    <div className="voice-wrapper">
-      <h3 className="voice-title">🎤 Talk to AI</h3>
+    <div className="voice-page">
+      {/* Stickers */}
+      <span className="sticker sticker1">🤖</span>
+      <span className="sticker sticker2">🎧</span>
+      <span className="sticker sticker3">✨</span>
 
-      {/* Mic button */}
-      <button
-        className={`mic-btn ${recording ? "recording" : ""}`}
-        onClick={recording ? stopRecording : startRecording}
-      >
-        {recording ? (
-          <span className="pulse"></span>
-        ) : (
-          <Mic size={32} strokeWidth={2.5} />
+      <div className="voice-card">
+        <h2 className="voice-title">🎤 Talk to AI</h2>
+        <p className="personality-text">
+          Talking to: <strong>{personality}</strong>
+        </p>
+
+        {/* Mic Button */}
+        <button
+          className={`mic-btn ${recording ? "recording" : ""}`}
+          onClick={recording ? stopRecording : startRecording}
+        >
+          {recording ? <span className="pulse"></span> : <Mic size={40} strokeWidth={2.5} />}
+        </button>
+
+        {/* AI is Processing */}
+        {loading && !speaking && (
+          <div className="ai-avatar">
+            <Loader2 className="spin" size={30} />
+            <p>AI is thinking...</p>
+          </div>
         )}
-      </button>
 
-      {/* AI Response Animation */}
-      {loading && (
-        <div className="ai-avatar">
-          <Loader2 className="spin" size={28} />
-          <p>AI is replying...</p>
-        </div>
-      )}
+        {/* AI is Speaking */}
+        {speaking && (
+          <div className="ai-speaking">
+            <Volume2 size={28} className="bounce" />
+            <p>AI is speaking...</p>
+          </div>
+        )}
 
-      {/* Playback */}
-      {audioUrl && !loading && (
-        <div className="playback">
-          <audio controls src={audioUrl}></audio>
-        </div>
-      )}
+        {/* AI Text Reply */}
+        {message && !loading && (
+          <div className="ai-message">
+            <p>{message}</p>
+          </div>
+        )}
+
+        {/* Playback Controls */}
+        {audioUrl && !loading && (
+          <div className="playback">
+            <audio controls src={audioUrl}></audio>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
