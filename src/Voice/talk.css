@@ -1,0 +1,142 @@
+.personalities-section {
+  padding: 3rem 2rem;
+  text-align: center;
+}
+
+.personalities-section h2 {
+  font-size: 2.2rem;
+  margin-bottom: 2rem;
+  font-weight: 800;
+  background: linear-gradient(90deg, #4a90e2, #9c27b0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.personalities-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  gap: 2rem;
+}
+
+/* Base card */
+.personality-card {
+  position: relative;
+  padding: 1.5rem;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.personality-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+.personality-card img {
+  width: 100%;
+  height: 230px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+}
+
+.personality-card h3 {
+  font-size: 1.4rem;
+  margin: 0.5rem 0;
+  font-weight: 700;
+}
+
+.personality-card .role {
+  font-size: 0.95rem;
+  margin-bottom: 0.8rem;
+  font-style: italic;
+}
+
+.personality-card button {
+  border: none;
+  color: white;
+  padding: 0.7rem 1.4rem;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+/* THEME VARIANTS */
+
+/* Einstein → Blue */
+.card-einstein {
+  border-top: 6px solid #4a90e2;
+}
+.card-einstein h3 {
+  color: #4a90e2;
+}
+.card-einstein .role {
+  color: #4a90e2;
+}
+.card-einstein button {
+  background: #4a90e2;
+}
+.card-einstein button:hover {
+  background: #3a78c0;
+}
+
+/* Detective → Purple */
+.card-detective {
+  border-top: 6px solid #9c27b0;
+}
+.card-detective h3 {
+  color: #9c27b0;
+}
+.card-detective .role {
+  color: #9c27b0;
+}
+.card-detective button {
+  background: #9c27b0;
+}
+.card-detective button:hover {
+  background: #7b1fa2;
+}
+
+/* Hitler → Red */
+.card-hitler {
+  border-top: 6px solid #e53935;
+}
+.card-hitler h3 {
+  color: #e53935;
+}
+.card-hitler .role {
+  color: #e53935;
+}
+.card-hitler button {
+  background: #e53935;
+}
+.card-hitler button:hover {
+  background: #c62828;
+}
+
+/* + Sign Overlay */
+.card-hitler::after {
+  content: "+";
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: rgba(229, 57, 53, 0.8);
+}
+
+/* Disclaimer */
+.disclaimer {
+  font-size: 0.9rem;
+  color: #b71c1c;
+  margin-top: 2rem;
+  background: #fdecea;
+  padding: 1rem;
+  border-radius: 12px;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}

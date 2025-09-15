@@ -1,0 +1,163 @@
+:root {
+  --main-blue: #1976d2;
+  --secondary-purple: #7e57c2;
+  --background-white: #ffffff;
+  --text-color: #333;
+}
+
+/* Header container */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: var(--background-white);
+  color: var(--main-blue);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 30px;
+  border-bottom: 2px solid #f1f1f1;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+/* Logo */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.sparkle {
+  font-size: 22px;
+  animation: pulse 1.5s infinite;
+  color: var(--secondary-purple);
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 0.7; }
+  50% { transform: scale(1.2); opacity: 1; }
+}
+
+.logo-text {
+  font-size: 22px;
+  font-weight: 700;
+  background: linear-gradient(90deg, var(--main-blue), var(--secondary-purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Desktop nav */
+.nav {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+/* User Greeting */
+.user-greeting {
+  color: var(--main-blue);
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 20px;
+  background: rgba(25, 118, 210, 0.1);
+  transition: all 0.3s ease;
+}
+
+.user-greeting:hover {
+  background: rgba(25, 118, 210, 0.2);
+}
+
+/* Buttons */
+.btn {
+  padding: 8px 18px;
+  border-radius: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 14px;
+  border: none;
+}
+
+/* Outline button */
+.btn-outline {
+  border: 2px solid var(--main-blue);
+  background: transparent;
+  color: var(--main-blue);
+}
+
+.btn-outline:hover {
+  background: var(--main-blue);
+  color: var(--background-white);
+}
+
+/* Filled button */
+.btn-filled {
+  background: var(--secondary-purple);
+  color: var(--background-white);
+}
+
+.btn-filled:hover {
+  background: #9c6be8;
+  transform: scale(1.05);
+}
+
+/* Hamburger */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.hamburger span {
+  height: 3px;
+  width: 25px;
+  background: var(--main-blue);
+  border-radius: 2px;
+  transition: 0.3s;
+}
+
+/* Hamburger open effect */
+.hamburger.open span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+.hamburger.open span:nth-child(2) {
+  opacity: 0;
+}
+.hamburger.open span:nth-child(3) {
+  transform: rotate(-45deg) translate(6px, -6px);
+}
+
+/* Mobile nav */
+.mobile-nav {
+  display: none;
+  flex-direction: column;
+  gap: 12px;
+  background: var(--background-white);
+  padding: 15px;
+  position: absolute;
+  top: 60px;
+  right: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.mobile-nav.show {
+  display: flex;
+}
+
+/* Align user greeting and logout button in mobile nav */
+.mobile-nav .user-greeting {
+  margin-bottom: 8px;
+}
+
+/* Responsive behavior */
+@media (max-width: 768px) {
+  .nav {
+    display: none;
+  }
+  .hamburger {
+    display: flex;
+  }
+}

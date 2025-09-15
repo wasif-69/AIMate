@@ -1,0 +1,93 @@
+.main {
+  height: 100vh;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-family: "Poppins", sans-serif;
+}
+
+.overlay {
+  background: rgba(10, 0, 40, 0.65); /* dark purple transparent */
+  backdrop-filter: blur(6px);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-content {
+  text-align: center;
+  max-width: 700px;
+  padding: 2rem;
+  animation: fadeInUp 1.2s ease;
+}
+
+.hero-content h1 {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: #ffffff;
+}
+
+.highlight {
+  color: #6c63ff; /* bright purple accent */
+}
+
+.subtitle {
+  font-size: 1.3rem;
+  color: #d1d1f0;
+  margin-bottom: 2rem;
+}
+
+.actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.btn {
+  padding: 0.8rem 1.8rem;
+  border-radius: 12px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-filled {
+  background: linear-gradient(135deg, #6c63ff, #3f3d9b);
+  color: white;
+  border: none;
+}
+
+.btn-filled:hover {
+  background: linear-gradient(135deg, #524bcc, #2c2a7a);
+}
+
+.btn-outline {
+  border: 2px solid #6c63ff;
+  background: transparent;
+  color: #6c63ff;
+}
+
+.btn-outline:hover {
+  background: #6c63ff;
+  color: white;
+}
+
+/* Fade-in animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
