@@ -1,26 +1,26 @@
 import React from "react";
 import "./talk.css";
-import einsteinImg from "../assets/enistein.png";
-import detectiveImg from "../assets/detect (1).png";
-import hitlerImg from "../assets/intro.jpg";
+import einsteinImg from "../assets/personality image/ens.jpeg";
+import detectiveImg from "../assets/personality image/detect.jpeg";
+import hitlerImg from "../assets/personality image/hit.jpeg";
 import { useNavigate } from "react-router-dom";
 
-export default function TalkWithPersonalities({ setpersonaity }) {
+export default function TalkWithPersonalities({ setPersonality }) {
   const navigate = useNavigate();
 
   const ens = () => {
-    setpersonaity("Albert Einstein");
-    navigate("/exp");
+    setPersonality("Albert Einstein");
+    navigate("/personalityChat");
   };
 
   const hit = () => {
-    setpersonaity("Hitler");
-    navigate("/exp");
+    setPersonality("Hitler");
+    navigate("/personalityChat");
   };
 
   const detect = () => {
-    setpersonaity("The Detective");
-    navigate("/exp");
+    setPersonality("The Detective");
+    navigate("/personalityChat");
   };
 
   return (
