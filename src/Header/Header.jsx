@@ -64,6 +64,9 @@ export default function Header() {
       <Link to="/aivoice">
         <button className="btn btn-outline">AI Voice</button>
       </Link>
+      <Link to="/feedback">
+        <button className="btn btn-outline">Feedback</button>
+      </Link>
 
       {/* Logout */}
       <button className="btn btn-outline" onClick={handleLogout}>

@@ -15,6 +15,7 @@ import Msg from "./Example/exp";
 import Test from "./Test/Test";
 import UserChat from "./Code/ChatUI";
 import ChatLayout from "./Example/exp";
+import Feedback from "./Feedback/feedback";
 
 function App() {
   // fixed naming: personality + setPersonality
@@ -77,6 +78,8 @@ function App() {
         />
 
         <Route path="/userchat/:uid" element={<UserChat/>} />
+
+        <Route path="/feedback" element={<Feedback/>} />
       </Routes>
 
       <Footer />
