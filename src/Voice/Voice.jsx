@@ -28,7 +28,7 @@ export default function VoiceRecorder({ personality }) {
         formData.append("file", blob, "voice.webm");
         formData.append("personality", personality);
 
-        const res = await fetch("http://127.0.0.1:5000/upload", {
+        const res = await fetch("https://aimateserver.onrender.com/upload", {
           method: "POST",
           body: formData,
         });
@@ -38,7 +38,7 @@ export default function VoiceRecorder({ personality }) {
 
         if (data.filename) {
           setMessage(data.message); // show AI’s text reply
-          const audioUrl = `http://127.0.0.1:5000/uploads/${data.filename}`;
+          const audioUrl = `https://aimateserver.onrender.com/${data.filename}`;
           setAudioUrl(audioUrl);
 
           const audio = new Audio(audioUrl);

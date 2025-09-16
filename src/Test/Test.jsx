@@ -29,7 +29,7 @@ export default function Test() {
     try {
       setLoading(true);
 
-      const response = await fetch("http://127.0.0.1:5000/test", {
+      const response = await fetch("https://aimateserver.onrender.com/test", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
