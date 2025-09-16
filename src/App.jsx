@@ -1,18 +1,20 @@
-import Header from './Header/Header';
-import Login from './SigninANDout/Login';
-import Signin from './SigninANDout/Signin';
-import Main from './Main/Main';
-import { Routes, Route } from 'react-router-dom';
-import ModelForm from './Models/model';
-import AddModel from './Models/create';
-import Chat from './Chat/chat';
-import MyModels from './Models/Mymodels';
-import AudioUploader from './Voice/Voice';
-import TalkWithPersonalities from './Voice/Talk';
-import { useState } from 'react';
-import Footer from './Footer/Footer';
-import Msg from './Example/exp';
-import Test from './Test/Test';
+import Header from "./Header/Header";
+import Login from "./SigninANDout/Login";
+import Signin from "./SigninANDout/Signin";
+import Main from "./Main/Main";
+import { Routes, Route } from "react-router-dom";
+import ModelForm from "./Models/model";
+import AddModel from "./Models/create";
+import Chat from "./Chat/chat";
+import MyModels from "./Models/Mymodels";
+import AudioUploader from "./Voice/Voice";
+import TalkWithPersonalities from "./Voice/Talk";
+import { useState } from "react";
+import Footer from "./Footer/Footer";
+import Msg from "./Example/exp";
+import Test from "./Test/Test";
+import UserChat from "./Code/ChatUI";
+import ChatLayout from "./Example/exp";
 
 function App() {
   // fixed naming: personality + setPersonality
@@ -20,7 +22,7 @@ function App() {
 
   return (
     <>
-      <Header />
+      <Header/>
 
       <Routes>
         {/* Home Page */}
@@ -64,6 +66,17 @@ function App() {
 
         {/* Quick Test */}
         <Route path="/quicktest" element={<Test />} />
+
+        <Route
+          path="/exp"
+          element={
+            <>
+              <ChatLayout/>
+            </>
+          }
+        />
+
+        <Route path="/userchat/:uid" element={<UserChat/>} />
       </Routes>
 
       <Footer />

@@ -1,0 +1,52 @@
+.chat-list-section {
+  padding: 2rem;
+}
+
+.title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #4a4aff;
+  margin-bottom: 1.5rem;
+}
+
+.empty {
+  text-align: center;
+  color: #777;
+  font-size: 1rem;
+}
+
+.chat-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.chat-card {
+  background: #f0f2ff;
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
+}
+
+.chat-card:hover {
+  transform: translateY(-4px);
+}
+
+.chat-card h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #2e2e8c;
+}
+
+.chat-card .email {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.chat-card .last-message {
+  font-size: 1rem;
+  color: #333;
+  margin-top: 0.4rem;
+}

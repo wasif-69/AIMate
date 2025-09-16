@@ -1,61 +1,60 @@
-import React, { useEffect, useState } from "react";
-import { auth } from "../Firebase/firebaseConfig";
-import { Send_message, listenMessage } from "../Firebase/Chats/Chat";
-import { onAuthStateChanged } from "firebase/auth";
+// ChatLayout.jsx
+import { useState } from "react";
+import UserList from "../Code/allUser";
+import ChatList from "../Code/ChatLIST";
+import ChatWindow from "./window"; // we'll create this
+import "./exp.css";
 
-export default function Msg() {
-  const [user, setUser] = useState(null);
-  const [text, setText] = useState("");
-  const [messages, setMessages] = useState([]);
-  
-  const otherUserId = "81260xY1hzWr8seKfIoRcYvdYSf2";
 
-  // ✅ Wait for Firebase auth state
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-    });
-    return () => unsubscribe();
-  }, []);
+export default function ChatLayout() {
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [showSidebar, setShowSidebar] = useState(true);
+  const [view, setView] = useState("chats"); // "chats" or "users"
 
-  // ✅ Start listening to messages only if user exists
-  useEffect(() => {
-    if (!user) return;
-    const unsubscribe = listenMessage(user.uid, otherUserId, setMessages);
-    return () => unsubscribe();
-  }, [user, otherUserId]);
-
-  const handleSend = async () => {
-    if (!text.trim() || !user) return;
-    await Send_message(user.uid, otherUserId, text);
-    setText("");
+  const handleSelectUser = (uid) => {
+    setSelectedUser(uid);
+    setShowSidebar(false);
   };
 
-  if (!user) {
-    return <p>Loading user...</p>; // or redirect to login
-  }
-
   return (
-    <div className="chat-container">
-      <div className="chat-box">
-        {messages.map((msg) => (
-          <p
-            key={msg.id}
-            className={msg.sender === user.uid ? "my-msg" : "other-msg"}
-          >
-            {msg.text}
-          </p>
-        ))}
-      </div>
-      <div className="chat-input">
-        <input
-          type="text"
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && handleSend()}
-        />
-        <button onClick={handleSend}>Send</button>
-      </div>
+    <div className="chat-layout">
+      {/* Sidebar */}
+      <aside className={`sidebar ${showSidebar ? "visible" : "hidden"}`}>
+        {/* Sidebar header */}
+        <div className="sidebar-header">
+          {view === "users" && (
+            <button className="back-btn" onClick={() => setView("chats")}>
+              ⬅ Back
+            </button>
+          )}
+          <h2>{view === "chats" ? "Chats" : "Users"}</h2>
+        </div>
+
+        {view === "chats" ? (
+          <>
+            <ChatList onSelectUser={handleSelectUser} />
+            <button className="switch-btn" onClick={() => setView("users")}>
+              ➕ New Chat
+            </button>
+          </>
+        ) : (
+          <UserList onSelectUser={handleSelectUser} />
+        )}
+      </aside>
+
+      {/* Chat Window */}
+      <main className="chat-main">
+        {selectedUser ? (
+          <ChatWindow
+            otherUserId={selectedUser}
+            onBack={() => setShowSidebar(true)}
+          />
+        ) : (
+          <div className="empty-chat">
+            <h3>Select a user to start chatting 💬</h3>
+          </div>
+        )}
+      </main>
     </div>
   );
 }

@@ -1,0 +1,54 @@
+.user-list-section {
+  padding: 2rem;
+}
+
+.title {
+  font-size: 2rem;
+  text-align: center;
+  color: #4a4aff;
+  margin-bottom: 2rem;
+}
+
+.user-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.user-card {
+  background: #e0e0ff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  transition: transform 0.2s;
+}
+
+.user-card:hover {
+  transform: translateY(-5px);
+}
+
+.user-card h3 {
+  margin: 0.2rem 0 0.5rem 0;
+  color: #2e2e8c;
+}
+
+.user-card p {
+  margin: 0.3rem 0;
+  font-size: 0.95rem;
+  color: #3b3b6d;
+}
+
+.user-card button {
+  margin-top: 1rem;
+  padding: 0.5rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  background-color: #6c63ff;
+  color: white;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.user-card button:hover {
+  background-color: #574bdb;
+}

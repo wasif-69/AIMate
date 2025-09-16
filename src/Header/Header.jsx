@@ -58,8 +58,8 @@ export default function Header() {
       <Link to="/chatModels">
         <button className="btn btn-outline">Model Chat</button>
       </Link>
-      <Link to="/game">
-        <button className="btn btn-outline">Game</button>
+      <Link to="/exp">
+        <button className="btn btn-outline">User Chats</button>
       </Link>
       <Link to="/aivoice">
         <button className="btn btn-outline">AI Voice</button>
