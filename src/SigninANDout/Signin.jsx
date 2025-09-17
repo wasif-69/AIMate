@@ -8,47 +8,59 @@ import "./Signin.css";
 export default function Signin() {
   const [info, setInfo] = useState(null);
   const [userState, setUserState] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
+  // Watch auth state
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-      setUserState(currentUser);
+      setLoading(true);
       if (currentUser) {
-        const info = await getInfo(currentUser.uid);
-        setInfo(info);
+        const userInfo = await getInfo(currentUser.uid);
+        setInfo(userInfo);
+        setUserState(currentUser);
+      } else {
+        setUserState(null);
+        setInfo(null);
       }
+      setLoading(false);
     });
     return () => unsubscribe();
   }, []);
 
+  // Handle signup
   const handleForm = async (e) => {
     e.preventDefault();
-    const formData = new FormData(e.target);
+    setError("");
+    setLoading(true);
 
+    const formData = new FormData(e.target);
     const email = formData.get("email");
     const password = formData.get("password");
-    const date = formData.get("date");
     const student = formData.get("Student");
     const school = formData.get("school");
     const model = formData.get("model");
 
     try {
-      await registerNewUser(email, password, date, student, school, model);
+      await registerNewUser(email, password, student, school, model);
       console.log("User registered successfully!");
-      navigate("/"); // redirect to homepage after registration
+      navigate("/");
     } catch (err) {
       console.error("Error registering user:", err);
+      setError("Registration failed. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
-  const registerNewUser = async (email, password, date, studentName, institute, modelInfo) => {
+  const registerNewUser = async (email, password, studentName, institute, modelInfo) => {
     const userCredentials = await createUserWithEmailAndPassword(auth, email, password);
     const user = userCredentials.user;
 
     await setDoc(doc(db, "Student", user.uid), {
       userID: user.uid,
       email,
-      date,
       Student: studentName,
       ins: institute,
       model: modelInfo,
@@ -64,22 +76,26 @@ export default function Signin() {
 
   return (
     <div className="signin-container">
-      {userState === null ? (
+      {loading ? (
+        <div className="loading-spinner">Loading...</div>
+      ) : !userState ? (
         <form className="signin-form" onSubmit={handleForm}>
           <h2>Register Your Account</h2>
 
-          <input type="email" name="email" placeholder="Email" required />
+          <input type="email" name="email" placeholder="Email" required autoFocus />
           <input type="password" name="password" placeholder="Password" required />
-          <input type="date" name="date" placeholder="Date of Birth" required />
           <input type="text" name="Student" placeholder="Full Name" required />
           <input type="text" name="school" placeholder="School / Institute" required />
           <textarea name="model" rows="4" placeholder="Tell us about yourself..." required></textarea>
+
+          {error && <p className="error-message">{error}</p>}
 
           <button type="submit" className="btn btn-filled">Register</button>
         </form>
       ) : (
         <div className="welcome-card">
-          <h2>please wait......</h2>
+          <h2>Welcome 🎉</h2>
+          <p>{info?.Student ? `Hello, ${info.Student}` : "Your account has been created!"}</p>
         </div>
       )}
     </div>

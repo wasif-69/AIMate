@@ -1,142 +1,144 @@
+:root {
+  --einstein-blue: #1976d2;
+  --mentor-purple: #7e57c2;
+  --hitler-red: #c62828;
+  --white: #ffffff;
+  --text-dark: #2d2d2d;
+  --card-shadow: rgba(0, 0, 0, 0.12);
+  --gradient: linear-gradient(135deg, #1976d2, #7e57c2);
+}
+
+/* Section Wrapper */
 .personalities-section {
-  padding: 3rem 2rem;
+  padding: 60px 20px;
+  background: #f4f6fb;
   text-align: center;
+  min-height: 100vh;
 }
 
-.personalities-section h2 {
-  font-size: 2.2rem;
-  margin-bottom: 2rem;
+/* Title */
+.section-title {
+  font-size: 34px;
   font-weight: 800;
-  background: linear-gradient(90deg, #4a90e2, #9c27b0);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--einstein-blue);
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  animation: fadeDown 0.8s ease;
 }
 
+/* Grid Layout */
 .personalities-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+  margin-top: 40px;
 }
 
-/* Base card */
+/* Personality Card Base */
 .personality-card {
-  position: relative;
-  padding: 1.5rem;
-  border-radius: 16px;
-  background: #fff;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  background: var(--white);
+  border-radius: 18px;
+  box-shadow: 0 6px 18px var(--card-shadow);
+  padding: 25px;
+  transition: all 0.35s ease;
+  overflow: hidden;
 }
 
 .personality-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.18);
 }
 
 .personality-card img {
   width: 100%;
-  height: 230px;
+  height: 180px;
   object-fit: cover;
   border-radius: 12px;
-  margin-bottom: 1rem;
+  margin-bottom: 20px;
+  transition: transform 0.4s ease;
+}
+
+.personality-card:hover img {
+  transform: scale(1.05);
 }
 
 .personality-card h3 {
-  font-size: 1.4rem;
-  margin: 0.5rem 0;
+  font-size: 22px;
+  margin-bottom: 8px;
   font-weight: 700;
 }
 
-.personality-card .role {
-  font-size: 0.95rem;
-  margin-bottom: 0.8rem;
-  font-style: italic;
+.role {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 12px;
 }
 
+.personality-card p {
+  font-size: 15px;
+  color: var(--text-dark);
+  line-height: 1.5;
+  margin-bottom: 18px;
+}
+
+/* Buttons */
 .personality-card button {
+  padding: 10px 22px;
+  border-radius: 25px;
   border: none;
-  color: white;
-  padding: 0.7rem 1.4rem;
-  border-radius: 10px;
-  cursor: pointer;
-  font-size: 1rem;
+  color: var(--white);
   font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
   transition: all 0.3s ease;
 }
 
-/* THEME VARIANTS */
-
-/* Einstein → Blue */
-.card-einstein {
-  border-top: 6px solid #4a90e2;
+/* Theme Variations */
+.einstein-theme h3,
+.einstein-theme .role {
+  color: var(--einstein-blue);
 }
-.card-einstein h3 {
-  color: #4a90e2;
+.einstein-theme button {
+  background: var(--einstein-blue);
 }
-.card-einstein .role {
-  color: #4a90e2;
-}
-.card-einstein button {
-  background: #4a90e2;
-}
-.card-einstein button:hover {
-  background: #3a78c0;
+.einstein-theme button:hover {
+  background: #1255a5;
 }
 
-/* Detective → Purple */
-.card-detective {
-  border-top: 6px solid #9c27b0;
+.mentor-theme h3,
+.mentor-theme .role {
+  color: var(--mentor-purple);
 }
-.card-detective h3 {
-  color: #9c27b0;
+.mentor-theme button {
+  background: var(--mentor-purple);
 }
-.card-detective .role {
-  color: #9c27b0;
-}
-.card-detective button {
-  background: #9c27b0;
-}
-.card-detective button:hover {
-  background: #7b1fa2;
+.mentor-theme button:hover {
+  background: #5e3cb1;
 }
 
-/* Hitler → Red */
-.card-hitler {
-  border-top: 6px solid #e53935;
+.hitler-theme h3,
+.hitler-theme .role {
+  color: var(--hitler-red);
 }
-.card-hitler h3 {
-  color: #e53935;
+.hitler-theme button {
+  background: var(--hitler-red);
 }
-.card-hitler .role {
-  color: #e53935;
-}
-.card-hitler button {
-  background: #e53935;
-}
-.card-hitler button:hover {
-  background: #c62828;
-}
-
-/* + Sign Overlay */
-.card-hitler::after {
-  content: "+";
-  position: absolute;
-  top: 12px;
-  right: 14px;
-  font-size: 1.8rem;
-  font-weight: bold;
-  color: rgba(229, 57, 53, 0.8);
+.hitler-theme button:hover {
+  background: #8e1c1c;
 }
 
 /* Disclaimer */
 .disclaimer {
-  font-size: 0.9rem;
-  color: #b71c1c;
-  margin-top: 2rem;
-  background: #fdecea;
-  padding: 1rem;
-  border-radius: 12px;
-  max-width: 700px;
+  margin-top: 50px;
+  font-size: 14px;
+  color: #555;
+  max-width: 600px;
   margin-left: auto;
   margin-right: auto;
+  line-height: 1.6;
+  background: #fff7e6;
+  padding: 14px 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
 }

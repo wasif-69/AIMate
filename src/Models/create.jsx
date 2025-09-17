@@ -1,8 +1,45 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../Firebase/firebaseConfig";
 import "./create.css";
 
 export default function AddModel() {
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+      setLoading(false);
+    });
+    return () => unsubscribe();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="addmodel-container">
+        <h2 className="addmodel-title">Loading...</h2>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return (
+      <div className="addmodel-container">
+        <h2 className="addmodel-title">Login Required</h2>
+        <p className="addmodel-subtitle">
+          Please login to create your own AI model.
+        </p>
+        <Link to="/login">
+          <button className="btn btn-filled">Go to Login</button>
+
+        </Link>
+      </div>
+    );
+  }
+
   return (
     <div className="addmodel-container">
       <h2 className="addmodel-title">Create Your AI Model</h2>

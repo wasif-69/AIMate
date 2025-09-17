@@ -1,9 +1,3 @@
-:root {
-  --main-blue: #1976d2;
-  --secondary-purple: #7e57c2;
-  --background-white: #ffffff;
-}
-
 .addmodel-container {
   padding: 40px 20px;
   text-align: center;
@@ -12,7 +6,7 @@
 .addmodel-title {
   font-size: 32px;
   font-weight: 800;
-  color: var(--main-blue);
+  color: #1976d2; /* main blue */
   margin-bottom: 10px;
 }
 
@@ -29,7 +23,7 @@
 }
 
 .addmodel-card {
-  background: var(--background-white);
+  background: #ffffff; /* background white */
   padding: 25px;
   border-radius: 15px;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
@@ -44,7 +38,7 @@
 
 .addmodel-card h3 {
   font-size: 22px;
-  color: var(--secondary-purple);
+  color: #7e57c2; /* secondary purple */
   margin-bottom: 10px;
 }
 
@@ -55,6 +49,7 @@
 }
 
 .btn {
+  display: inline-block;
   padding: 10px 20px;
   border-radius: 25px;
   font-weight: 600;
@@ -62,15 +57,32 @@
   cursor: pointer;
   transition: all 0.3s ease;
   text-decoration: none;
+  border: none !important;
+  outline: none;
 }
 
 .btn-filled {
-  border: none;
-  background: var(--secondary-purple);
-  color: var(--background-white);
+  background-color: #7e57c2 !important; /* Purple */
+  color: #fff !important;
 }
 
 .btn-filled:hover {
-  background: #9c6be8;
+  background-color: #9c6be8 !important;
   transform: scale(1.05);
+}
+
+/* Login Required Message */
+.addmodel-container h2 {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

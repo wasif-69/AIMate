@@ -82,7 +82,7 @@ function App() {
         <Route path="/feedback" element={<Feedback/>} />
       </Routes>
 
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 }

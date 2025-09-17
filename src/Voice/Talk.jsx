@@ -1,25 +1,21 @@
 import React from "react";
 import "./talk.css";
 import einsteinImg from "../assets/personality image/ens.jpeg";
-import detectiveImg from "../assets/personality image/detect.jpeg";
+import mentorImg from "../assets/personality image/mark.png";
 import hitlerImg from "../assets/personality image/hit.jpeg";
 import { useNavigate } from "react-router-dom";
+import { auth } from "../Firebase/firebaseConfig";
 
 export default function TalkWithPersonalities({ setPersonality }) {
   const navigate = useNavigate();
 
-  const ens = () => {
-    setPersonality("Albert Einstein");
-    navigate("/personalityChat");
-  };
-
-  const hit = () => {
-    setPersonality("Hitler");
-    navigate("/personalityChat");
-  };
-
-  const detect = () => {
-    setPersonality("The Detective");
+  const handleTalk = (personality) => {
+    if (!auth.currentUser) {
+      alert("⚠️ Please login to talk with personalities.");
+      navigate("/login");
+      return;
+    }
+    setPersonality(personality);
     navigate("/personalityChat");
   };
 
@@ -29,44 +25,44 @@ export default function TalkWithPersonalities({ setPersonality }) {
 
       <div className="personalities-grid">
         {/* Einstein */}
-        <div className="personality-card card-einstein">
+        <div className="personality-card einstein-theme">
           <img src={einsteinImg} alt="Albert Einstein" />
           <h3>Albert Einstein</h3>
           <p className="role">Physicist</p>
           <p>
-            Chat with Einstein about science, curiosity, and the mysteries of the
-            universe.
+            Chat with Einstein about science, curiosity, and the mysteries of the universe.
           </p>
-          <button onClick={ens}>Talk</button>
+          <button onClick={() => handleTalk("Albert Einstein")}>Talk</button>
         </div>
 
-        {/* Detective */}
-        <div className="personality-card card-detective">
-          <img src={detectiveImg} alt="Detective" />
-          <h3>The Detective</h3>
-          <p className="role">Investigator</p>
+        {/* Student Mentor */}
+        <div className="personality-card mentor-theme">
+          <img src={mentorImg} alt="Student Mentor" />
+          <h3>Student Mentor</h3>
+          <p className="role">Guide & Motivator</p>
           <p>
-            Solve mysteries and train your mind with a sharp and logical
-            detective.
+            Get advice on studies, time management, exams, and building a brighter future.
           </p>
-          <button onClick={detect}>Talk</button>
+          <button onClick={() => handleTalk("Student Mentor")}>Talk</button>
         </div>
 
         {/* Hitler */}
-        <div className="personality-card card-hitler">
+        <div className="personality-card hitler-theme">
           <img src={hitlerImg} alt="Hitler" />
           <h3>Hitler</h3>
           <p className="role">Controversial Leader</p>
           <p>
             Learn history with a critical perspective. (Educational purposes only)
           </p>
-          <button onClick={hit}>Talk</button>
+          <button onClick={() => handleTalk("Hitler")}>Talk</button>
         </div>
       </div>
 
       <div className="disclaimer">
         ⚠️ Disclaimer: Conversations with these personalities are AI-simulated
-        for learning/entertainment only.
+        for learning/entertainment only.  
+        <br />
+        🔑 You must be logged in to chat.
       </div>
     </section>
   );

@@ -8,34 +8,47 @@ import "./Login.css";
 export default function Login() {
   const [info, setInfo] = useState(null);
   const [userState, setUserState] = useState(null);
-  const navigate = useNavigate(); // React Router navigation
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
 
+  // Watch auth state
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-      setUserState(currentUser);
+      setLoading(true);
       if (currentUser) {
-        const info = await getInfo(currentUser.uid);
-        setInfo(info);
+        const userInfo = await getInfo(currentUser.uid);
+        setInfo(userInfo);
+        setUserState(currentUser);
+      } else {
+        setUserState(null);
+        setInfo(null);
       }
+      setLoading(false);
     });
     return () => unsubscribe();
   }, []);
 
+  // Handle login form submit
   const handleForm = async (e) => {
     e.preventDefault();
+    setError("");
+    setLoading(true);
+
     const formData = new FormData(e.target);
     const email = formData.get("mail");
     const password = formData.get("password");
 
     try {
       const user = await login(email, password);
-      const info = await getInfo(user.uid);
-      setInfo(info);
-
-      // Redirect to home page after successful login
+      const userInfo = await getInfo(user.uid);
+      setInfo(userInfo);
       navigate("/");
     } catch (err) {
       console.error("Login error:", err);
+      setError("Invalid email or password. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -52,23 +65,46 @@ export default function Login() {
   const logOut = async () => {
     await signOut(auth);
     setInfo(null);
-    console.log("Logged out");
+    setUserState(null);
   };
 
   return (
     <div className="login-container">
-      {userState === null ? (
+      {loading ? (
+        <div className="loading-spinner">Loading...</div>
+      ) : !userState ? (
         <form className="login-form" onSubmit={handleForm}>
           <h2>Login to Your Account</h2>
-          <input type="email" name="mail" placeholder="Email" required />
-          <input type="password" name="password" placeholder="Password" required />
-          <button type="submit" className="btn btn-filled">Login</button>
+
+          <input
+            type="email"
+            name="mail"
+            placeholder="Email"
+            required
+            autoFocus
+            aria-label="Email"
+          />
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            required
+            aria-label="Password"
+          />
+
+          {error && <p className="error-message">{error}</p>}
+
+          <button type="submit" className="btn btn-filled">
+            Login
+          </button>
         </form>
       ) : (
         <div className="welcome-card">
-          <h2>please wait......</h2>
-          
-          <button onClick={logOut} className="btn btn-outline">Logout</button>
+          <h2>Welcome back 👋</h2>
+          <p>{info?.name ? `Hello, ${info.name}` : "You are logged in!"}</p>
+          <button onClick={logOut} className="btn btn-outline">
+            Logout
+          </button>
         </div>
       )}
     </div>

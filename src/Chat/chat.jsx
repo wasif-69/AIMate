@@ -18,6 +18,11 @@ export default function Chat() {
   const [messages, setMessages] = useState([]);
   const chatEndRef = useRef(null);
 
+  // Auto scroll to bottom
+  const scrollToBottom = () => {
+    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
   // Load messages in real-time
   useEffect(() => {
     if (!auth.currentUser) return;
@@ -38,17 +43,15 @@ export default function Chat() {
     return () => unsubscribe();
   }, [modelId]);
 
-  const scrollToBottom = () => {
-    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
-
   const send = async () => {
     if (!text.trim()) return;
 
+    const userMessage = text; // keep current text
+    setText(""); // clear input instantly
+
     try {
-      await savemessage(auth.currentUser.uid, modelId, "User", text);
-      await sendMessageToAPI(text);
-      setText("");
+      await savemessage(auth.currentUser.uid, modelId, "User", userMessage);
+      await sendMessageToAPI(userMessage);
     } catch (err) {
       console.error("Error sending message:", err);
     }
@@ -64,8 +67,7 @@ export default function Chat() {
         modelId
       );
       const data_fetched = await getDoc(ref);
-      const fetched=data_fetched.data()
-      return fetched
+      return data_fetched.data();
     } catch {
       console.log("Error fetching Data (in chat.jsx)");
     }
@@ -73,11 +75,11 @@ export default function Chat() {
 
   const sendMessageToAPI = async (userText) => {
     try {
-      const fetched_data=await fetch_data();
+      const fetched_data = await fetch_data();
       const response = await fetch("https://aimateserver.onrender.com/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: userText, ID: fetched_data}),
+        body: JSON.stringify({ message: userText, ID: fetched_data }),
       });
       const data = await response.json();
       if (data.message) {
