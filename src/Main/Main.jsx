@@ -1,28 +1,58 @@
-import React from "react";
+import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
+import { auth } from "../Firebase/firebaseConfig";
+import { Link } from "react-router-dom";
 import "./main.css";
-import bgImage from "../assets/robot5.png"; // Background image (AI-themed)
+import robot from "../assets/personality image/robot (2).png"
 
 export default function Main() {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((currentUser) => {
+      setUser(currentUser);
+    });
+    return () => unsubscribe();
+  }, []);
+
   return (
-    <main
-      className="main"
-      style={{ backgroundImage: `url(${bgImage})` }}
-    >
-      <div className="overlay">
-        <div className="hero-content">
-          <h1>
-            Welcome to <span className="highlight">AImate</span>
-          </h1>
-          <p className="subtitle">
-            Your personal AI companion for <br />
-            stress relief, guidance, and future planning.
-          </p>
-          <div className="actions">
-            <button className="btn btn-filled">🚀 Get Started</button>
-            <button className="btn btn-outline">💡 Learn More</button>
-          </div>
-        </div>
+    <section className="hero-container">
+      {/* Robot Image */}
+      <motion.img
+        src={robot} // put robot.png inside /public/images
+        alt="AI Robot"
+        className="hero-robot"
+        animate={{ y: [0, -10, 0] }}
+        transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
+      />
+
+      {/* Title */}
+      <h1 className="hero-title">
+        Meet <span className="highlight">AImate</span>
+      </h1>
+
+      {/* Subtitle */}
+      <p className="hero-subtitle">
+        Your AI companion — always ready to chat, assist, and grow with you.
+      </p>
+
+      {/* Buttons - conditional */}
+      <div className="hero-buttons">
+        {!user ? (
+          <Link to="/signup">
+            <button className="btn-primary">Sign up to Get Started</button>
+          </Link>
+        ) : (
+          <>
+            <Link to="/chatModels">
+              <button className="btn-primary">Model Chat</button>
+            </Link>
+            <Link to="/quicktest">
+              <button className="btn-secondary">Take Test</button>
+            </Link>
+          </>
+        )}
       </div>
-    </main>
+    </section>
   );
 }
