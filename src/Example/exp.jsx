@@ -1,18 +1,18 @@
-// ChatLayout.jsx
 import { useState } from "react";
 import UserList from "../Code/allUser";
 import ChatList from "../Code/ChatLIST";
-import ChatWindow from "./window"; // we'll create this
+import ChatWindow from "./window";
 import "./exp.css";
-
 
 export default function ChatLayout() {
   const [selectedUser, setSelectedUser] = useState(null);
+  const [selectedUserName, setSelectedUserName] = useState("");
   const [showSidebar, setShowSidebar] = useState(true);
-  const [view, setView] = useState("chats"); // "chats" or "users"
+  const [view, setView] = useState("chats");
 
-  const handleSelectUser = (uid) => {
+  const handleSelectUser = (uid, name) => {
     setSelectedUser(uid);
+    setSelectedUserName(name);
     setShowSidebar(false);
   };
 
@@ -20,7 +20,6 @@ export default function ChatLayout() {
     <div className="chat-layout">
       {/* Sidebar */}
       <aside className={`sidebar ${showSidebar ? "visible" : "hidden"}`}>
-        {/* Sidebar header */}
         <div className="sidebar-header">
           {view === "users" && (
             <button className="back-btn" onClick={() => setView("chats")}>
@@ -42,11 +41,17 @@ export default function ChatLayout() {
         )}
       </aside>
 
+      {/* Overlay for mobile */}
+      {showSidebar && (
+        <div className="overlay" onClick={() => setShowSidebar(false)}></div>
+      )}
+
       {/* Chat Window */}
       <main className="chat-main">
         {selectedUser ? (
           <ChatWindow
             otherUserId={selectedUser}
+            otherUserName={selectedUserName}
             onBack={() => setShowSidebar(true)}
           />
         ) : (

@@ -1,54 +1,46 @@
-.user-list-section {
-  padding: 2rem;
-}
-
-.title {
-  font-size: 2rem;
-  text-align: center;
-  color: #4a4aff;
-  margin-bottom: 2rem;
-}
-
+/* Grid Layout */
 .user-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 1.5rem;
+  padding: 2rem;
+  max-width: 1000px;
+  margin: auto;
 }
 
+/* Card Styling */
 .user-card {
-  background: #e0e0ff;
-  border-radius: 12px;
-  padding: 1.5rem;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-  transition: transform 0.2s;
+  background: #f9f9ff;
+  border-radius: 14px;
+  padding: 1.2rem;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  cursor: pointer;
+  transition: all 0.25s ease;
+  border: 1px solid #e0e0ff;
 }
 
 .user-card:hover {
   transform: translateY(-5px);
+  background: #f0f0ff;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
 }
 
+/* Typography */
 .user-card h3 {
-  margin: 0.2rem 0 0.5rem 0;
+  font-size: 1.2rem;
+  font-weight: 600;
   color: #2e2e8c;
+  margin-bottom: 0.4rem;
 }
 
-.user-card p {
-  margin: 0.3rem 0;
+.user-card .institute {
   font-size: 0.95rem;
-  color: #3b3b6d;
+  color: #444;
+  margin-bottom: 0.3rem;
 }
 
-.user-card button {
-  margin-top: 1rem;
-  padding: 0.5rem 1.2rem;
-  border: none;
-  border-radius: 8px;
-  background-color: #6c63ff;
-  color: white;
-  cursor: pointer;
-  font-weight: 500;
-}
-
-.user-card button:hover {
-  background-color: #574bdb;
+.user-card .email {
+  font-size: 0.85rem;
+  color: #777;
+  word-break: break-all;
 }

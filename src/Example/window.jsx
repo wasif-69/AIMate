@@ -1,17 +1,22 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { auth } from "../Firebase/firebaseConfig";
 import { Send_message, listenMessage } from "../Firebase/Chats/Chat";
+import { useChat } from "./Chatcontst"; // ✅ import
 import "./win.css";
 
-export default function ChatWindow({ otherUserId, onBack }) {
+export default function ChatWindow({ otherUserId, otherUserName, onBack }) {
   const currentUserId = auth.currentUser?.uid;
   const [messages, setMessages] = useState([]);
   const [text, setText] = useState("");
+  const chatEndRef = useRef(null);
+  const { clearUnread } = useChat();
 
   useEffect(() => {
     if (!currentUserId || !otherUserId) return;
-
-    const unsubscribe = listenMessage(currentUserId, otherUserId, setMessages);
+    const unsubscribe = listenMessage(currentUserId, otherUserId, (msgs) => {
+      setMessages(msgs);
+      clearUnread(otherUserId); // clear notifications when opened
+    });
     return () => unsubscribe();
   }, [currentUserId, otherUserId]);
 
@@ -19,16 +24,24 @@ export default function ChatWindow({ otherUserId, onBack }) {
     if (text.trim() === "") return;
     await Send_message(currentUserId, otherUserId, text);
     setText("");
+    setTimeout(scrollToBottom, 100);
   };
+
+  const scrollToBottom = () => {
+    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
   return (
     <div className="chat-window">
-      {/* Sticky back button */}
       <div className="chat-header">
         <button className="back-btn" onClick={onBack}>
           ⬅ Back
         </button>
-        <h3>Chat</h3>
+        <h3>{otherUserName || "Chat"}</h3>
       </div>
 
       <div className="messages">
@@ -47,6 +60,7 @@ export default function ChatWindow({ otherUserId, onBack }) {
             </small>
           </div>
         ))}
+        <div ref={chatEndRef} />
       </div>
 
       <div className="chat-input">

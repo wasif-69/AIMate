@@ -27,20 +27,19 @@ export default function UserList({ onSelectUser }) {
 
   return (
     <div className="user-grid">
-      {users.map(
-        (user) =>
-          user.id !== currentUserId && (
-            <div
-              key={user.id}
-              className="user-card"
-              onClick={() => onSelectUser(user.userID)}
-            >
-              <h3>{user.Student}</h3>
-              <p>{user.ins}</p>
-              <p className="email">{user.email}</p>
-            </div>
-          )
-      )}
+      {users
+        .filter((user) => user.id !== currentUserId)
+        .map((user) => (
+          <div
+            key={user.id}
+            className="user-card"
+            onClick={() => onSelectUser(user.userID)}
+          >
+            <h3>{user.Student}</h3>
+            <p className="institute">{user.ins}</p>
+            <p className="email">{user.email}</p>
+          </div>
+        ))}
     </div>
   );
 }
