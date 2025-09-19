@@ -59,7 +59,7 @@ export default function Header() {
       <div className="user-greeting">Hello, {userInfo?.Student}</div>
       <Link to="/quicktest"><button className="btn btn-outline">Quick Test!</button></Link>
       <Link to="/chatModels"><button className="btn btn-outline">Model Chat</button></Link>
-      <Link to="/exp"><button className="btn btn-outline">User Chats</button></Link>
+      <Link to="/com"><button className="btn btn-outline">Find Community</button></Link>
       <Link to="/aivoice"><button className="btn btn-outline">AI Voice</button></Link>
       <Link to="/feedback"><button className="btn btn-outline">Feedback</button></Link>
       <button className="btn btn-outline" onClick={handleLogout}>Logout</button>

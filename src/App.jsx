@@ -16,6 +16,8 @@ import Test from "./Test/Test";
 import UserChat from "./Code/ChatUI";
 import ChatLayout from "./Example/exp";
 import Feedback from "./Feedback/feedback";
+import Comunity from "./community/comunity";
+import Allcumminty from "./community/allcumminty";
 
 function App() {
   // fixed naming: personality + setPersonality
@@ -80,7 +82,11 @@ function App() {
         <Route path="/userchat/:uid" element={<UserChat/>} />
 
         <Route path="/feedback" element={<Feedback/>} />
-      </Routes>
+
+        <Route path="/community" element={<Comunity/>}  />
+        <Route path="/com" element={<Allcumminty/>}  />
+
+       </Routes>
 
       {/* <Footer /> */}
     </>
