@@ -2,7 +2,7 @@ import Header from "./Header/Header";
 import Login from "./SigninANDout/Login";
 import Signin from "./SigninANDout/Signin";
 import Main from "./Main/Main";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route,useLocation } from "react-router-dom";
 import ModelForm from "./Models/model";
 import AddModel from "./Models/create";
 import Chat from "./Chat/chat";
@@ -18,6 +18,7 @@ import ChatLayout from "./Example/exp";
 import Feedback from "./Feedback/feedback";
 import Comunity from "./community/comunity";
 import Allcumminty from "./community/allcumminty";
+import { AnimatePresence } from "framer-motion";
 
 function App() {
   // fixed naming: personality + setPersonality
@@ -26,8 +27,8 @@ function App() {
   return (
     <>
       <Header/>
-
-      <Routes>
+      <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
         {/* Home Page */}
         <Route
           path="/"
@@ -36,6 +37,7 @@ function App() {
               <Main />
               <AddModel />
               <TalkWithPersonalities setPersonality={setPersonality} />
+              <Footer />
             </>
           }
         />
@@ -61,6 +63,7 @@ function App() {
         <Route
           path="/aivoice"
           element={<TalkWithPersonalities setPersonality={setPersonality} />}
+          // element={<TalkWith setPersonality={setPersonality} />}
         />
         <Route
           path="/personalityChat"
@@ -87,8 +90,9 @@ function App() {
         <Route path="/com" element={<Allcumminty/>}  />
 
        </Routes>
-
+       </AnimatePresence>
       {/* <Footer /> */}
+
     </>
   );
 }

@@ -1,69 +1,100 @@
-import React from "react";
+import React, { useState } from "react";
 import "./talk.css";
 import einsteinImg from "../assets/personality image/ens.jpeg";
 import mentorImg from "../assets/personality image/mark.png";
 import hitlerImg from "../assets/personality image/hit.jpeg";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../Firebase/firebaseConfig";
+import { motion } from "framer-motion";
+import LoginModal from "./loginmodel";
 
 export default function TalkWithPersonalities({ setPersonality }) {
   const navigate = useNavigate();
+  const [showModal, setShowModal] = useState(false);
 
   const handleTalk = (personality) => {
     if (!auth.currentUser) {
-      alert("⚠️ Please login to talk with personalities.");
-      navigate("/login");
+      setShowModal(true);
+      // navigate("/login");
       return;
     }
     setPersonality(personality);
     navigate("/personalityChat");
   };
 
+  const personalities = [
+    {
+      name: "Albert Einstein",
+      image: einsteinImg,
+      role: "Physicist",
+      description:
+        "Chat with Einstein about science, creativity, and the mysteries of the universe.",
+      theme: "einstein-theme",
+    },
+    {
+      name: "Student Mentor",
+      image: mentorImg,
+      role: "Guide & Motivator",
+      description:
+        "Get advice on studies, productivity, and how to build a brighter future.",
+      theme: "mentor-theme",
+    },
+    {
+      name: "Adolf Hitler",
+      image: hitlerImg,
+      role: "Historical Figure (1930s–1940s)",
+      description:
+        "Understand history from a critical and educational lens. (Simulated AI character)",
+      theme: "hitler-theme",
+    },
+  ];
+
   return (
-    <section className="personalities-section">
+    
+
+    <motion.section
+      className="personalities-section"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.6 }}
+    >
+      <section className="personalities-section">
       <h2 className="section-title">Talk With Personalities</h2>
+      <p className="section-subtitle">
+        Choose a personality to simulate a guided conversation powered by AI.
+      </p>
 
       <div className="personalities-grid">
-        {/* Einstein */}
-        <div className="personality-card einstein-theme">
-          <img src={einsteinImg} alt="Albert Einstein" />
-          <h3>Albert Einstein</h3>
-          <p className="role">Physicist</p>
-          <p>
-            Chat with Einstein about science, curiosity, and the mysteries of the universe.
-          </p>
-          <button onClick={() => handleTalk("Albert Einstein")}>Talk</button>
-        </div>
-
-        {/* Student Mentor */}
-        <div className="personality-card mentor-theme">
-          <img src={mentorImg} alt="Student Mentor" />
-          <h3>Student Mentor</h3>
-          <p className="role">Guide & Motivator</p>
-          <p>
-            Get advice on studies, time management, exams, and building a brighter future.
-          </p>
-          <button onClick={() => handleTalk("Student Mentor")}>Talk</button>
-        </div>
-
-        {/* Hitler */}
-        <div className="personality-card hitler-theme">
-          <img src={hitlerImg} alt="Hitler" />
-          <h3>Hitler</h3>
-          <p className="role">Controversial Leader</p>
-          <p>
-            Learn history with a critical perspective. (Educational purposes only)
-          </p>
-          <button onClick={() => handleTalk("Hitler")}>Talk</button>
-        </div>
+        {personalities.map(({ name, image, role, description, theme }) => (
+          <div key={name} className={`personality-card ${theme}`}>
+            <img src={image} alt={name} />
+            <h3>{name}</h3>
+            <p className="role">{role}</p>
+            <p>{description}</p>
+            <button onClick={() => handleTalk(name)}>Talk</button>
+          </div>
+        ))}
       </div>
 
       <div className="disclaimer">
-        ⚠️ Disclaimer: Conversations with these personalities are AI-simulated
-        for learning/entertainment only.  
+        ⚠️ <strong>Disclaimer:</strong> These AI personalities are fictional
+        simulations for educational and entertainment purposes only.
         <br />
-        🔑 You must be logged in to chat.
+        🔒 You must be logged in to start a conversation.
+        <br />
+        📚 Historical figures are presented with critical context and are not intended to promote any ideology.
       </div>
     </section>
+    {showModal && (
+        <LoginModal
+          onClose={() => setShowModal(false)}
+          onLoginRedirect={() => {
+            setShowModal(false);
+            navigate("/login");
+          }}
+        />
+      )}
+    </motion.section>
   );
 }

@@ -1,17 +1,12 @@
-import { addDoc, collection, doc, setDoc } from "firebase/firestore"
-import {auth,db} from "../firebaseConfig"
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "../firebaseConfig";
 
+export const add_community = async (uid, data, link) => {
+  const reference = collection(db, "Community");
 
-
-
-export const add_community=async (uid,data)=>{
-
-    const reference=collection(db,"Community")
-    
-    await addDoc(reference,{
-        UserID:uid,
-        data:data
-    })
-
-    
-}
+  await addDoc(reference, {
+    UserID: uid,
+    data: data,
+    Link: link || "",   // 🔑 ensures empty string instead of undefined
+  });
+};

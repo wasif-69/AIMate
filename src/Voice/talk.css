@@ -5,10 +5,44 @@
   --white: #ffffff;
   --text-dark: #2d2d2d;
   --card-shadow: rgba(0, 0, 0, 0.12);
-  --gradient: linear-gradient(135deg, #1976d2, #7e57c2);
+  --glass-bg: rgba(255, 255, 255, 0.85);
 }
 
-/* Section Wrapper */
+/* ========== KEYFRAMES ========== */
+
+@keyframes fadeSlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+/* ========== SECTION LAYOUT ========== */
+
 .personalities-section {
   padding: 60px 20px;
   background: #f4f6fb;
@@ -16,26 +50,34 @@
   min-height: 100vh;
 }
 
-/* Title */
+/* ========== TITLES ========== */
+
 .section-title {
   font-size: 34px;
   font-weight: 800;
   color: var(--einstein-blue);
-  margin-bottom: 15px;
+  margin-bottom: 8px;
   text-transform: uppercase;
-  letter-spacing: 1px;
   animation: fadeDown 0.8s ease;
 }
 
-/* Grid Layout */
+.section-subtitle {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 40px;
+  opacity: 0.8;
+}
+
+/* ========== GRID LAYOUT ========== */
+
 .personalities-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 30px;
-  margin-top: 40px;
 }
 
-/* Personality Card Base */
+/* ========== CARD BASE ========== */
+
 .personality-card {
   background: var(--white);
   border-radius: 18px;
@@ -43,12 +85,28 @@
   padding: 25px;
   transition: all 0.35s ease;
   overflow: hidden;
+  opacity: 0;
+  animation: fadeSlideUp 0.8s ease forwards;
+}
+
+.personalities-grid .personality-card:nth-child(1) {
+  animation-delay: 0.1s;
+}
+.personalities-grid .personality-card:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.personalities-grid .personality-card:nth-child(3) {
+  animation-delay: 0.3s;
 }
 
 .personality-card:hover {
   transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.18);
+  background: var(--glass-bg);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.2);
 }
+
+/* ========== IMAGES ========== */
 
 .personality-card img {
   width: 100%;
@@ -57,11 +115,14 @@
   border-radius: 12px;
   margin-bottom: 20px;
   transition: transform 0.4s ease;
+  animation: float 3.5s ease-in-out infinite;
 }
 
 .personality-card:hover img {
-  transform: scale(1.05);
+  transform: scale(1.07) rotate(0.2deg);
 }
+
+/* ========== TEXT ========== */
 
 .personality-card h3 {
   font-size: 22px;
@@ -82,7 +143,8 @@
   margin-bottom: 18px;
 }
 
-/* Buttons */
+/* ========== BUTTONS ========== */
+
 .personality-card button {
   padding: 10px 22px;
   border-radius: 25px;
@@ -92,9 +154,30 @@
   font-size: 14px;
   cursor: pointer;
   transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
-/* Theme Variations */
+.personality-card button::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.4s ease, height 0.4s ease;
+}
+
+.personality-card button:active::after {
+  width: 200%;
+  height: 200%;
+}
+
+/* ========== THEMES ========== */
+
 .einstein-theme h3,
 .einstein-theme .role {
   color: var(--einstein-blue);
@@ -128,17 +211,24 @@
   background: #8e1c1c;
 }
 
-/* Disclaimer */
+/* ========== DISCLAIMER ========== */
+
 .disclaimer {
-  margin-top: 50px;
+  margin-top: 60px;
   font-size: 14px;
-  color: #555;
-  max-width: 600px;
+  color: #333;
+  max-width: 700px;
   margin-left: auto;
   margin-right: auto;
   line-height: 1.6;
-  background: #fff7e6;
-  padding: 14px 20px;
+  background: #fff8e1;
+  padding: 16px 24px;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  animation: fadeSlideUp 0.6s ease forwards;
+  animation-delay: 0.5s;
+  opacity: 0;
 }
+
+/* ========== AOS (if used) ========== */
+/* No extra styles needed unless customizing further */

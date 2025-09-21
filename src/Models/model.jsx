@@ -2,30 +2,42 @@ import React, { useState } from "react";
 import { addModelToData } from "../Firebase/model";
 import { auth } from "../Firebase/firebaseConfig";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import "./model.css";
 
-// Assets
-import stress from "../assets/stress.jpg";
-import conseller from "../assets/conseller.jpg";
-import planner from "../assets/planner.png";
-import intro from "../assets/intro.jpg";
-import extro from "../assets/extro.jpg";
-import professional from "../assets/pro.png";
-
 export default function ModelForm() {
+  const [step, setStep] = useState(1);
   const [name, setName] = useState("");
   const [style, setStyle] = useState("");
   const [type, setType] = useState("");
   const [goals, setGoals] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!name || !style || !type || !goals) {
-      alert("⚠️ Please fill out all fields.");
-      return;
+  // Validation helper
+  const validateStep = () => {
+    if (step === 1 && !name.trim()) {
+      toast.warn("Please enter a model name.");
+      return false;
     }
+    if (step === 2 && (!style || !type)) {
+      toast.warn("Please select both Style and Type.");
+      return false;
+    }
+    if (step === 3 && !goals.trim()) {
+      toast.warn("Please enter your goals.");
+      return false;
+    }
+    return true;
+  };
 
+  const nextStep = () => {
+    if (validateStep()) setStep((prev) => Math.min(prev + 1, 4));
+  };
+  const prevStep = () => setStep((prev) => Math.max(prev - 1, 1));
+
+  const handleSubmit = async () => {
+    if (!validateStep()) return;
     try {
       const modelID = await addModelToData(
         auth.currentUser.uid,
@@ -34,101 +46,195 @@ export default function ModelForm() {
         goals,
         type
       );
-      setName("");
-      setStyle("");
-      setType("");
-      setGoals("");
-      navigate(`/chat/${modelID}`);
+      toast.success("🎉 Model created successfully!");
+      setTimeout(() => navigate(`/chat/${modelID}`), 1500);
     } catch (e) {
       console.error("ERROR:", e);
-      alert("❌ Failed to add model.");
+      toast.error("❌ Failed to add model.");
     }
   };
 
+  // Option data with tooltips
+  const styleOptions = [
+    { label: "Introvert", tooltip: "Prefers calm, introspective communication" },
+    { label: "Extrovert", tooltip: "Outgoing and expressive" },
+    { label: "Professional", tooltip: "Formal and business-like tone" },
+  ];
+  const typeOptions = [
+    { label: "Stress Manager", tooltip: "Helps manage and reduce stress" },
+    { label: "Counselor", tooltip: "Provides empathetic counseling" },
+    { label: "Planner", tooltip: "Organizes and plans effectively" },
+  ];
+
   return (
-    <div className="form-wrapper">
-      <form className="model-form" onSubmit={handleSubmit}>
-        <h2 className="form-title">🚀 Create Your AI Model</h2>
+    <>
+      <ToastContainer position="top-right" autoClose={3000} />
+      <div className="form-wrapper">
+        <form
+          className="model-form"
+          onSubmit={(e) => e.preventDefault()}
+          aria-label="Create your AI Model"
+        >
+          <h2 className="form-title">🚀 Create Your AI Model</h2>
 
-        {/* Model Name */}
-        <div className="input-group">
-          <input
-            type="text"
-            id="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-          />
-          <label htmlFor="name">Model Name</label>
-        </div>
+          {/* Progress Bar */}
+          <div className="progress-bar">
+            {["Name", "Style & Type", "Goals", "Preview"].map((label, idx) => (
+              <div
+                key={label}
+                className={`progress-step ${
+                  step === idx + 1
+                    ? "active"
+                    : idx + 1 < step
+                    ? "completed"
+                    : ""
+                }`}
+                aria-current={step === idx + 1 ? "step" : undefined}
+              >
+                <div className="step-number">{idx + 1}</div>
+                <div className="step-label">{label}</div>
+              </div>
+            ))}
+          </div>
 
-        {/* Style Selection */}
-        <h4 className="section-title">Choose Style</h4>
-        <div className="options-grid">
-          <div
-            className={`option-card ${style === "Introvert" ? "selected" : ""}`}
-            onClick={() => setStyle("Introvert")}
-          >
-            <img src={intro} alt="Introvert" />
-            <span>Introvert</span>
-          </div>
-          <div
-            className={`option-card ${style === "Extrovert" ? "selected" : ""}`}
-            onClick={() => setStyle("Extrovert")}
-          >
-            <img src={extro} alt="Extrovert" />
-            <span>Extrovert</span>
-          </div>
-          <div
-            className={`option-card ${style === "Professional" ? "selected" : ""}`}
-            onClick={() => setStyle("Professional")}
-          >
-            <img src={professional} alt="Professional" />
-            <span>Professional</span>
-          </div>
-        </div>
+          {/* Step 1: Name */}
+          {step === 1 && (
+            <div className="step-content animate-fade">
+              <div className="input-group">
+                <input
+                  type="text"
+                  id="name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                  autoFocus
+                  aria-required="true"
+                />
+                <label htmlFor="name">Model Name</label>
+              </div>
+            </div>
+          )}
 
-        {/* Type Selection */}
-        <h4 className="section-title">Choose Type</h4>
-        <div className="options-grid">
-          <div
-            className={`option-card ${type === "Stress Manager" ? "selected" : ""}`}
-            onClick={() => setType("Stress Manager")}
-          >
-            <img src={stress} alt="Stress Manager" />
-            <span>Stress Manager</span>
-          </div>
-          <div
-            className={`option-card ${type === "Counselor" ? "selected" : ""}`}
-            onClick={() => setType("Counselor")}
-          >
-            <img src={conseller} alt="Counselor" />
-            <span>Counselor</span>
-          </div>
-          <div
-            className={`option-card ${type === "Planner" ? "selected" : ""}`}
-            onClick={() => setType("Planner")}
-          >
-            <img src={planner} alt="Planner" />
-            <span>Planner</span>
-          </div>
-        </div>
+          {/* Step 2: Style & Type */}
+          {step === 2 && (
+            <div className="step-content animate-fade">
+              <h4 className="section-title">Choose Style</h4>
+              <div className="options-grid">
+                {styleOptions.map(({ label, tooltip }) => (
+                  <div
+                    key={label}
+                    role="button"
+                    tabIndex={0}
+                    className={`option-card ${style === label ? "selected" : ""}`}
+                    onClick={() => setStyle(label)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") setStyle(label);
+                    }}
+                    title={tooltip}
+                    aria-pressed={style === label}
+                  >
+                    <span>{label}</span>
+                  </div>
+                ))}
+              </div>
 
-        {/* Goals */}
-        <div className="input-group">
-          <textarea
-            id="goals"
-            value={goals}
-            onChange={(e) => setGoals(e.target.value)}
-            required
-          />
-          <label htmlFor="goals">Goals</label>
-        </div>
+              <h4 className="section-title">Choose Type</h4>
+              <div className="options-grid">
+                {typeOptions.map(({ label, tooltip }) => (
+                  <div
+                    key={label}
+                    role="button"
+                    tabIndex={0}
+                    className={`option-card ${type === label ? "selected" : ""}`}
+                    onClick={() => setType(label)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") setType(label);
+                    }}
+                    title={tooltip}
+                    aria-pressed={type === label}
+                  >
+                    <span>{label}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
 
-        <button type="submit" className="btn-submit">
-          Create Model
-        </button>
-      </form>
-    </div>
+          {/* Step 3: Goals */}
+          {step === 3 && (
+            <div className="step-content animate-fade">
+              <div className="input-group">
+                <textarea
+                  id="goals"
+                  value={goals}
+                  onChange={(e) => setGoals(e.target.value)}
+                  required
+                  maxLength={300}
+                  aria-required="true"
+                  autoFocus
+                />
+                <label htmlFor="goals">Goals</label>
+                <div className="char-count">{goals.length} / 300</div>
+              </div>
+            </div>
+          )}
+
+          {/* Step 4: Preview */}
+          {step === 4 && (
+            <div className="step-content animate-fade">
+              <div className="preview-box" aria-live="polite">
+                <h4>📝 Model Preview</h4>
+                <p>
+                  <strong>Name:</strong> {name || "Not set"}
+                </p>
+                <p>
+                  <strong>Style:</strong> {style || "Not selected"}
+                </p>
+                <p>
+                  <strong>Type:</strong> {type || "Not selected"}
+                </p>
+                <p>
+                  <strong>Goals:</strong> {goals || "No goals yet"}
+                </p>
+              </div>
+            </div>
+          )}
+
+          {/* Navigation Buttons */}
+          <div className="button-group">
+            {step > 1 && (
+              <button
+                type="button"
+                className="btn-secondary"
+                onClick={prevStep}
+                aria-label="Previous Step"
+              >
+                ← Back
+              </button>
+            )}
+            {step < 4 && (
+              <button
+                type="button"
+                className="btn-submit"
+                onClick={nextStep}
+                aria-label="Next Step"
+              >
+                Next →
+              </button>
+            )}
+            {step === 4 && (
+              <button
+                type="button"
+                className="btn-submit"
+                onClick={handleSubmit}
+                aria-label="Submit Model"
+              >
+                Create Model
+              </button>
+            )}
+          </div>
+        </form>
+      </div>
+    </>
   );
 }
