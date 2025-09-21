@@ -1,8 +1,8 @@
-/* Full-page layout */
-.voice-page {
+/* Layout */
+.voice-container {
   height: 100vh;
   width: 100%;
-  background: #f5f6ff; /* light background */
+  background: #f5f6ff;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -24,54 +24,86 @@
 .voice-card {
   background: #fff;
   border-radius: 20px;
-  box-shadow: 0 6px 25px rgba(0,0,0,0.15);
-  padding: 2rem;
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+  padding: 2.5rem 2rem;
   text-align: center;
   width: 90%;
   max-width: 500px;
 }
 
-.voice-title {
+/* Headings */
+.title {
   font-size: 2rem;
   font-weight: bold;
   color: #333;
 }
-
-.personality-text {
-  margin: 1rem 0 2rem;
+.subtitle {
   font-size: 1.1rem;
   color: #666;
+  margin: 1rem 0 2rem;
 }
 
 /* Mic Button */
-.mic-btn {
-  background: #5a4fcf; /* purple */
+.mic-button {
+  background: #5a4fcf;
   color: white;
   border: none;
   outline: none;
   padding: 25px;
   border-radius: 50%;
   cursor: pointer;
-  transition: 0.3s ease;
+  transition: background 0.3s ease;
   display: inline-flex;
   align-items: center;
   justify-content: center;
 }
-
-.mic-btn:hover {
+.mic-button:hover {
   background: #3a2faa;
 }
-
-.mic-btn.recording {
-  background: #007bff; /* blue */
-  animation: pulse 1.2s infinite;
+.mic-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
+.mic-button.recording {
+  background: #007bff;
+  animation: pulse 1.2s infinite;
+}
 .pulse {
   width: 28px;
   height: 28px;
   border-radius: 50%;
   background: white;
+}
+
+/* Status */
+.status {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: #444;
+}
+.status.speaking {
+  color: #5a4fcf;
+  font-weight: bold;
+}
+
+/* Animations */
+.spin {
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  100% { transform: rotate(360deg); }
+}
+
+.bounce {
+  animation: bounce 1s infinite;
+}
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
 }
 
 @keyframes pulse {
@@ -80,68 +112,49 @@
   100% { transform: scale(1); opacity: 0.7; }
 }
 
-/* Loading */
-.ai-avatar {
+/* Message Bubble */
+.ai-message {
   margin-top: 20px;
+  background: #e6e9ff;
+  border-radius: 12px;
+  padding: 14px 18px;
+  font-size: 1.1rem;
   color: #333;
+  text-align: left;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
 }
 
-.spin {
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  100% { transform: rotate(360deg); }
-}
-
-/* Playback */
-.playback {
+/* Audio Player */
+.audio-player {
   margin-top: 20px;
+}
+
+/* Reset Button */
+.reset-button {
+  margin-top: 20px;
+  background: transparent;
+  border: none;
+  color: #5a4fcf;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.2s ease;
+}
+.reset-button:hover {
+  color: #3a2faa;
 }
 
 /* Responsive */
 @media (max-width: 600px) {
   .voice-card {
-    padding: 1.5rem;
+    padding: 2rem 1.5rem;
   }
-  .voice-title {
+  .title {
     font-size: 1.5rem;
   }
-  .mic-btn {
+  .mic-button {
     padding: 20px;
   }
-}
-/* AI Message Bubble */
-.ai-message {
-  margin-top: 20px;
-  background: #e6e9ff;
-  border-radius: 12px;
-  padding: 12px 16px;
-  font-size: 1.1rem;
-  color: #333;
-  text-align: left;
-  box-shadow: 0 3px 12px rgba(0,0,0,0.1);
-}
-
-/* AI Speaking */
-.ai-speaking {
-  margin-top: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #5a4fcf;
-  font-weight: bold;
-}
-
-.ai-speaking p {
-  margin-left: 10px;
-}
-
-.bounce {
-  animation: bounce 1s infinite;
-}
-
-@keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
 }

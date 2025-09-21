@@ -289,3 +289,222 @@
   .options-grid { grid-template-columns: 1fr; }
   .container { padding: 0 8px; }
 }
+
+
+
+
+
+
+
+
+/* Creative form card */
+.test-form-card {
+  background: linear-gradient(135deg, #e0d7ff, #f6f8fb);
+  border-radius: var(--radius);
+  padding: 30px 28px 28px;
+  box-shadow: 0 12px 40px rgba(126, 87, 194, 0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.test-form-card:hover {
+  transform: translateY(-6px) rotateX(3deg);
+}
+
+/* Decorative floating circles */
+.test-form-card::before,
+.test-form-card::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.15;
+  filter: blur(30px);
+  pointer-events: none;
+}
+
+.test-form-card::before {
+  width: 160px;
+  height: 160px;
+  background: var(--secondary-purple);
+  top: -60px;
+  right: -60px;
+}
+
+.test-form-card::after {
+  width: 220px;
+  height: 220px;
+  background: var(--main-blue);
+  bottom: -90px;
+  left: -90px;
+}
+
+/* Header */
+.test-form-card h2 {
+  margin: 0 0 14px 0;
+  color: var(--secondary-purple);
+  font-weight: 700;
+  font-size: 28px;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  z-index: 1;
+  position: relative;
+}
+
+/* Floating label container */
+.label-float {
+  position: relative;
+  font-size: 14px;
+  color: #555;
+  margin-top: 18px;
+  z-index: 1;
+}
+
+/* Hide default label spacing */
+.label-float input {
+  width: 100%;
+  border: none;
+  border-bottom: 2px solid #ccc;
+  background: transparent;
+  padding: 14px 6px 6px;
+  font-size: 16px;
+  color: #222;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+/* Label text */
+.label-float label {
+  position: absolute;
+  top: 18px;
+  left: 6px;
+  color: #777;
+  font-weight: 500;
+  pointer-events: none;
+  transition: all 0.3s ease;
+  user-select: none;
+}
+
+/* Animate label when input focused or has value */
+.label-float input:focus + label,
+.label-float input:not(:placeholder-shown) + label {
+  top: 4px;
+  left: 2px;
+  font-size: 12px;
+  color: var(--main-blue);
+  font-weight: 700;
+}
+
+/* Input underline on focus */
+.label-float input:focus {
+  border-color: var(--main-blue);
+  box-shadow: 0 2px 6px rgba(25, 118, 210, 0.3);
+}
+
+/* Icons or emojis on labels */
+.label-float label::before {
+  content: attr(data-icon);
+  margin-right: 6px;
+  font-size: 16px;
+}
+
+/* Submit button */
+.btn.primary {
+  background: linear-gradient(135deg, var(--main-blue), var(--secondary-purple));
+  border: none;
+  color: white;
+  font-weight: 700;
+  font-size: 16px;
+  padding: 14px 22px;
+  border-radius: 14px;
+  box-shadow: 0 8px 15px rgba(126, 87, 194, 0.3);
+  cursor: pointer;
+  transition: box-shadow 0.3s ease, transform 0.15s ease;
+  user-select: none;
+}
+
+.btn.primary:hover:not([disabled]) {
+  box-shadow: 0 12px 20px rgba(126, 87, 194, 0.5);
+  transform: translateY(-3px);
+}
+
+.btn.primary:active:not([disabled]) {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 10px rgba(126, 87, 194, 0.4);
+}
+
+/* Disabled state */
+.btn[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+/* Note */
+.note {
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 8px;
+  font-style: italic;
+  user-select: none;
+}
+
+
+/* Label with icon above input */
+.label-with-icon {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--secondary-purple);
+  margin-top: 18px;
+  user-select: none;
+}
+
+/* Icon styling */
+.label-with-icon .icon {
+  font-size: 18px;
+  line-height: 1;
+}
+
+/* Input styling */
+.label-with-icon + input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1.5px solid #dde3ee;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.3s ease;
+  margin-top: 6px;
+}
+
+.label-with-icon + input:focus {
+  border-color: var(--main-blue);
+  box-shadow: 0 0 8px rgba(25, 118, 210, 0.3);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

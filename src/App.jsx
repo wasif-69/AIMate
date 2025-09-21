@@ -36,7 +36,7 @@ function App() {
             <>
               <Main />
               <AddModel />
-              <TalkWithPersonalities setPersonality={setPersonality} />
+              
               <Footer />
             </>
           }
@@ -84,7 +84,10 @@ function App() {
 
         <Route path="/userchat/:uid" element={<UserChat/>} />
 
-        <Route path="/feedback" element={<Feedback/>} />
+        <Route path="/feedback" element={<>
+        <Feedback/>
+        <Footer />
+        </>} />
 
         <Route path="/community" element={<Comunity/>}  />
         <Route path="/com" element={<Allcumminty/>}  />

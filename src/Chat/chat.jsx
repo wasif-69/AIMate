@@ -16,16 +16,39 @@ export default function Chat() {
   const { modelId } = useParams();
   const [text, setText] = useState("");
   const [messages, setMessages] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [showScrollButton, setShowScrollButton] = useState(false);
+  const chatBoxRef = useRef(null);
   const chatEndRef = useRef(null);
 
-  // Auto scroll to bottom
+  // Scroll to bottom if near bottom
   const scrollToBottom = () => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  // Load messages in real-time
+  // Handle scroll detection for scroll-to-bottom button
+  const handleScroll = () => {
+    const box = chatBoxRef.current;
+    if (!box) return;
+
+    const distanceFromBottom =
+      box.scrollHeight - box.scrollTop - box.clientHeight;
+    setShowScrollButton(distanceFromBottom > 150);
+  };
+
+  useEffect(() => {
+    const box = chatBoxRef.current;
+    if (box) {
+      box.addEventListener("scroll", handleScroll);
+    }
+    return () => {
+      if (box) box.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   useEffect(() => {
     if (!auth.currentUser) return;
+
     const messagesRef = collection(
       db,
       "Student",
@@ -34,53 +57,67 @@ export default function Chat() {
       modelId,
       "Chat"
     );
+
     const q = query(messagesRef, orderBy("time", "asc"));
-    const unsubscribe = onSnapshot(q, (snapshot) => {
+
+    const unsubscribe = onSnapshot(q, async (snapshot) => {
       const msgs = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
       setMessages(msgs);
+
+      if (msgs.length === 0) {
+        await savemessage(
+          auth.currentUser.uid,
+          modelId,
+          "AI",
+          "How can I help you man!"
+        );
+      }
+
       scrollToBottom();
     });
+
     return () => unsubscribe();
   }, [modelId]);
 
   const send = async () => {
-    if (!text.trim()) return;
+    if (!text.trim() || isLoading) return;
 
-    const userMessage = text; // keep current text
-    setText(""); // clear input instantly
+    const userMessage = text.trim();
+    setText("");
+    setIsLoading(true);
 
     try {
       await savemessage(auth.currentUser.uid, modelId, "User", userMessage);
       await sendMessageToAPI(userMessage);
     } catch (err) {
       console.error("Error sending message:", err);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const fetch_data = async () => {
     try {
-      const ref = doc(
-        db,
-        "Student",
-        auth.currentUser.uid,
-        "models",
-        modelId
-      );
+      const ref = doc(db, "Student", auth.currentUser.uid, "models", modelId);
       const data_fetched = await getDoc(ref);
       return data_fetched.data();
-    } catch {
-      console.log("Error fetching Data (in chat.jsx)");
+    } catch (error) {
+      console.log("Error fetching Data (in chat.jsx)", error);
+      return null;
     }
   };
 
   const sendMessageToAPI = async (userText) => {
     try {
       const fetched_data = await fetch_data();
+      if (!fetched_data) throw new Error("No model data found");
+
       const response = await fetch("https://aimateserver.onrender.com/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: userText, ID: fetched_data }),
       });
+
       const data = await response.json();
       if (data.message) {
         await savemessage(auth.currentUser.uid, modelId, "AI", data.message);
@@ -96,7 +133,7 @@ export default function Chat() {
         <h2>AImate Chat</h2>
       </div>
 
-      <div className="chat-box">
+      <div className="chat-box" ref={chatBoxRef}>
         {messages.map((msg) => (
           <div
             key={msg.id}
@@ -108,6 +145,12 @@ export default function Chat() {
         <div ref={chatEndRef} />
       </div>
 
+      {showScrollButton && (
+        <button className="scroll-to-bottom" onClick={scrollToBottom}>
+          ↓
+        </button>
+      )}
+
       <div className="chat-input">
         <input
           type="text"
@@ -115,8 +158,11 @@ export default function Chat() {
           value={text}
           onChange={(e) => setText(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && send()}
+          disabled={isLoading}
         />
-        <button onClick={send}>Send</button>
+        <button onClick={send} disabled={isLoading || !text.trim()}>
+          {isLoading ? "..." : "Send"}
+        </button>
       </div>
     </div>
   );

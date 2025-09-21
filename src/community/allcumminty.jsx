@@ -78,7 +78,7 @@ export default function AllCommunity() {
       {user && (
         <button
           className="add-btn"
-          onClick={() => navigate("/community/add")}
+          onClick={() => navigate("/community")}
         >
           ➕ Add Your Community
         </button>
