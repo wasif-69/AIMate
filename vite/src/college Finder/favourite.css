@@ -84,3 +84,17 @@
 .remove-btn:hover {
   background-color: #b71c1c;
 }
+
+.login-message-box {
+  max-width: 400px;
+  margin: 2rem auto;
+  padding: 1.5rem 2rem;
+  border: 2px solid var(--main-blue);
+  border-radius: 10px;
+  color: var(--main-blue);
+  background-color: #e3f2fd; /* light blue background */
+  font-weight: 600;
+  box-shadow: 0 0 10px rgba(25, 118, 210, 0.3);
+  text-align: center;
+  user-select: none;
+}

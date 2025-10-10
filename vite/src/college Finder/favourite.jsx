@@ -34,7 +34,9 @@ export default function Favourite() {
       try {
         const favCollection = collection(db, "Student", user.uid, "Favourite");
         const q = orderBy("university");
-        const snapshot = await getDocs(collection(db, "Student", user.uid, "Favourite"));
+        const snapshot = await getDocs(
+          collection(db, "Student", user.uid, "Favourite")
+        );
         const data = snapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
@@ -64,21 +66,20 @@ export default function Favourite() {
 
   if (!user) {
     return (
-      <div style={{ textAlign: "center", marginTop: "2rem" }}>
+      <div className="login-message-box">
         <h2>Please log in to see your favorite universities.</h2>
       </div>
     );
   }
 
   function getDomain(url) {
-  try {
-    const { hostname } = new URL(url);
-    return hostname.replace("www.", "");
-  } catch {
-    return null;
+    try {
+      const { hostname } = new URL(url);
+      return hostname.replace("www.", "");
+    } catch {
+      return null;
+    }
   }
-}
-
 
   return (
     <div className="favourites-container">
@@ -95,31 +96,42 @@ export default function Favourite() {
           {favorites.map((uni) => (
             <div key={uni.id} className="favorite-card">
               <div className="sticker-container">
-  {uni.website ? (
-    <img
-      src={`https://logo.clearbit.com/${getDomain(uni.website)}`}
-      alt={`${uni.university} logo`}
-      className="uni-sticker"
-      onError={(e) => {
-        e.target.onerror = null; // prevent infinite loop
-        e.target.src = "https://img.icons8.com/color/96/000000/university.png"; // fallback
-      }}
-    />
-  ) : (
-    <img
-      src="https://img.icons8.com/color/96/000000/university.png"
-      alt="University sticker"
-      className="uni-sticker"
-    />
-  )}
-</div>
+                {uni.website ? (
+                  <img
+                    src={`https://logo.clearbit.com/${getDomain(uni.website)}`}
+                    alt={`${uni.university} logo`}
+                    className="uni-sticker"
+                    onError={(e) => {
+                      e.target.onerror = null; // prevent infinite loop
+                      e.target.src =
+                        "https://img.icons8.com/color/96/000000/university.png"; // fallback
+                    }}
+                  />
+                ) : (
+                  <img
+                    src="https://img.icons8.com/color/96/000000/university.png"
+                    alt="University sticker"
+                    className="uni-sticker"
+                  />
+                )}
+              </div>
 
               <h3>{uni.university}</h3>
-              <p><strong>QS Ranking:</strong> {uni.Qs_ranking}</p>
-              <p><strong>Acceptance Rate:</strong> {uni.acceptance_rate}</p>
-              <p><strong>Application Deadline:</strong> {uni.deadline}</p>
-              <p><strong>Scholarship:</strong> {uni.scholarship}</p>
-              <p><strong>Location:</strong> {uni.location}</p>
+              <p>
+                <strong>QS Ranking:</strong> {uni.Qs_ranking}
+              </p>
+              <p>
+                <strong>Acceptance Rate:</strong> {uni.acceptance_rate}
+              </p>
+              <p>
+                <strong>Application Deadline:</strong> {uni.deadline}
+              </p>
+              <p>
+                <strong>Scholarship:</strong> {uni.scholarship}
+              </p>
+              <p>
+                <strong>Location:</strong> {uni.location}
+              </p>
               <button
                 className="visit-btn"
                 onClick={() => window.open(uni.website, "_blank")}
