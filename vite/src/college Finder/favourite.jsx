@@ -5,24 +5,17 @@ import {
   collection,
   deleteDoc,
   doc,
-  query,
-  limit,
-  startAfter,
   orderBy,
 } from "firebase/firestore";
 import { db } from "../Firebase/firebaseConfig";
 import { onAuthStateChanged } from "firebase/auth";
 import "./favourite.css";
 
-const PAGE_SIZE = 6;
-
 export default function Favourite() {
   const [favorites, setFavorites] = useState([]);
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [lastDoc, setLastDoc] = useState(null);
-  const [page, setPage] = useState(1);
-  const [refreshToggle, setRefreshToggle] = useState(false); // to refresh list on delete
+  const [refreshToggle, setRefreshToggle] = useState(false);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -40,22 +33,13 @@ export default function Favourite() {
       setLoading(true);
       try {
         const favCollection = collection(db, "Student", user.uid, "Favourite");
-        let q = query(favCollection, orderBy("university"), limit(PAGE_SIZE));
-
-        if (lastDoc && page > 1) {
-          q = query(favCollection, orderBy("university"), startAfter(lastDoc), limit(PAGE_SIZE));
-        }
-
-        const querySnapshot = await getDocs(q);
-        const data = querySnapshot.docs.map((doc) => ({
+        const q = orderBy("university");
+        const snapshot = await getDocs(collection(db, "Student", user.uid, "Favourite"));
+        const data = snapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
         }));
-
         setFavorites(data);
-
-        // Save last document for pagination
-        setLastDoc(querySnapshot.docs[querySnapshot.docs.length - 1]);
       } catch (error) {
         console.error("Error fetching favorites:", error);
       } finally {
@@ -64,14 +48,12 @@ export default function Favourite() {
     };
 
     fetchFavorites();
-  }, [user, page, refreshToggle]);
+  }, [user, refreshToggle]);
 
-  // Remove a favorite university
   const removeFavorite = async (id) => {
     if (!user) return;
     try {
       await deleteDoc(doc(db, "Student", user.uid, "Favourite", id));
-      // Trigger refresh by toggling refreshToggle
       setRefreshToggle(!refreshToggle);
     } catch (error) {
       console.error("Error removing favorite:", error);
@@ -88,6 +70,16 @@ export default function Favourite() {
     );
   }
 
+  function getDomain(url) {
+  try {
+    const { hostname } = new URL(url);
+    return hostname.replace("www.", "");
+  } catch {
+    return null;
+  }
+}
+
+
   return (
     <div className="favourites-container">
       <h2 style={{ textAlign: "center", color: "#1976d2" }}>
@@ -99,48 +91,50 @@ export default function Favourite() {
           You haven't marked any universities as favorite yet.
         </p>
       ) : (
-        <>
-          <div className="favorite-grid">
-            {favorites.map((uni) => (
-              <div key={uni.id} className="favorite-card">
-                <h3>{uni.university}</h3>
-                <p><strong>QS Ranking:</strong> {uni.Qs_ranking}</p>
-                <p><strong>Acceptance Rate:</strong> {uni.acceptance_rate}</p>
-                <p><strong>Application Deadline:</strong> {uni.deadline}</p>
-                <p><strong>Scholarship:</strong> {uni.scholarship}</p>
-                <p><strong>Location:</strong> {uni.location}</p>
-                <p>
-                  <strong>Website:</strong>{" "}
-                  <a href={uni.website} target="_blank" rel="noopener noreferrer">
-                    {uni.website}
-                  </a>
-                </p>
-                <button
-                  className="remove-btn"
-                  onClick={() => removeFavorite(uni.id)}
-                >
-                  Remove from Favorites
-                </button>
-              </div>
-            ))}
-          </div>
+        <div className="favorite-grid">
+          {favorites.map((uni) => (
+            <div key={uni.id} className="favorite-card">
+              <div className="sticker-container">
+  {uni.website ? (
+    <img
+      src={`https://logo.clearbit.com/${getDomain(uni.website)}`}
+      alt={`${uni.university} logo`}
+      className="uni-sticker"
+      onError={(e) => {
+        e.target.onerror = null; // prevent infinite loop
+        e.target.src = "https://img.icons8.com/color/96/000000/university.png"; // fallback
+      }}
+    />
+  ) : (
+    <img
+      src="https://img.icons8.com/color/96/000000/university.png"
+      alt="University sticker"
+      className="uni-sticker"
+    />
+  )}
+</div>
 
-          <div className="pagination">
-            <button
-              disabled={page === 1}
-              onClick={() => setPage((p) => Math.max(p - 1, 1))}
-            >
-              Previous
-            </button>
-            <span>Page {page}</span>
-            <button
-              disabled={favorites.length < PAGE_SIZE}
-              onClick={() => setPage((p) => p + 1)}
-            >
-              Next
-            </button>
-          </div>
-        </>
+              <h3>{uni.university}</h3>
+              <p><strong>QS Ranking:</strong> {uni.Qs_ranking}</p>
+              <p><strong>Acceptance Rate:</strong> {uni.acceptance_rate}</p>
+              <p><strong>Application Deadline:</strong> {uni.deadline}</p>
+              <p><strong>Scholarship:</strong> {uni.scholarship}</p>
+              <p><strong>Location:</strong> {uni.location}</p>
+              <button
+                className="visit-btn"
+                onClick={() => window.open(uni.website, "_blank")}
+              >
+                🌐 Visit Website
+              </button>
+              <button
+                className="remove-btn"
+                onClick={() => removeFavorite(uni.id)}
+              >
+                ❌ Remove
+              </button>
+            </div>
+          ))}
+        </div>
       )}
     </div>
   );

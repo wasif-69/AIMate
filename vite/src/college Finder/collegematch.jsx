@@ -47,7 +47,7 @@ export default function Collegematch() {
   const APICaller = async (form, countries) => {
     try {
       setLoading(true);
-      const res = await fetch("http://192.168.100.29:5000/uniFinder", {
+      const res = await fetch("https://aimate-7rdt.onrender.com/uniFinder", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ form, countries }),
@@ -78,7 +78,7 @@ export default function Collegematch() {
         "professional"
       );
 
-      const response = await fetch("http://192.168.100.29:5000/chat", {
+      const response = await fetch("https://aimate-7rdt.onrender.com/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: name, ID: "none" }),

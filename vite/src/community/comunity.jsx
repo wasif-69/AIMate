@@ -62,7 +62,7 @@ export default function CommunityWizard() {
     }
     setLoadingSchema(true);
     try {
-      const response = await fetch("https://aimateserver.onrender.com/community", {
+      const response = await fetch("https://aimate-7rdt.onrender.com/community", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: text }),

@@ -1,91 +1,86 @@
+:root {
+  --main-blue: #1976d2;
+  --secondary-purple: #7e57c2;
+}
+
 .favourites-container {
-  max-width: 1000px;
+  max-width: 1100px;
   margin: 0 auto;
   padding: 2rem;
 }
 
 .favorite-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill,minmax(280px,1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.8rem;
 }
 
 .favorite-card {
-  border: 1px solid #ccc;
-  border-radius: 10px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
   padding: 1.5rem;
-  background: #f3f6fb;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  background: #f9fbff;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
   transition: transform 0.2s ease;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  position: relative;
 }
 
 .favorite-card:hover {
-  transform: translateY(-4px);
+  transform: translateY(-6px);
 }
 
 .favorite-card h3 {
-  color: #7e57c2;
-  margin-top: 0;
+  color: var(--secondary-purple);
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
 }
 
 .favorite-card p {
-  margin: 0.5rem 0;
-  line-height: 1.5;
-  flex-grow: 1;
+  margin: 0.3rem 0;
+  line-height: 1.4;
 }
 
-.favorite-card a {
-  color: #1976d2;
-  text-decoration: none;
-}
-
-.favorite-card a:hover {
-  text-decoration: underline;
-}
-
-.remove-btn {
-  margin-top: 1rem;
-  background-color: var(--secondary-purple);
-  color: white;
-  border: none;
-  padding: 0.5rem;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
-}
-
-.remove-btn:hover {
-  background-color: #5a3e9a; /* Darker purple */
-}
-
-.pagination {
+.sticker-container {
   display: flex;
   justify-content: center;
-  align-items: center;
-  gap: 1.5rem;
-  margin-top: 2rem;
+  margin-bottom: 0.5rem;
 }
 
-.pagination button {
-  padding: 0.5rem 1.2rem;
+.uni-sticker {
+  width: 60px;
+  height: 60px;
+}
+
+.visit-btn {
+  margin-top: 1rem;
   background-color: var(--main-blue);
   color: white;
   border: none;
+  padding: 0.5rem 0.8rem;
   border-radius: 6px;
   cursor: pointer;
   font-weight: 600;
   transition: background-color 0.3s ease;
 }
 
-.pagination button:disabled {
-  background-color: #a0c3ff;
-  cursor: not-allowed;
+.visit-btn:hover {
+  background-color: #1259a3;
 }
 
-.pagination button:hover:not(:disabled) {
-  background-color: #155a9a; /* Darker blue */
+.remove-btn {
+  margin-top: 0.5rem;
+  background-color: #d32f2f;
+  color: white;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.remove-btn:hover {
+  background-color: #b71c1c;
 }

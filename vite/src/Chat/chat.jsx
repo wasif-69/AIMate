@@ -114,7 +114,7 @@ export default function Chat() {
       const fetched_data = await fetch_data();
       if (!fetched_data) throw new Error("No model data found");
 
-      const response = await fetch("https://aimateserver.onrender.com/chat", {
+      const response = await fetch("https://aimate-7rdt.onrender.com/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: userText, ID: fetched_data }),
