@@ -1,0 +1,91 @@
+.favourites-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.favorite-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill,minmax(280px,1fr));
+  gap: 1.5rem;
+}
+
+.favorite-card {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 1.5rem;
+  background: #f3f6fb;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.favorite-card:hover {
+  transform: translateY(-4px);
+}
+
+.favorite-card h3 {
+  color: #7e57c2;
+  margin-top: 0;
+}
+
+.favorite-card p {
+  margin: 0.5rem 0;
+  line-height: 1.5;
+  flex-grow: 1;
+}
+
+.favorite-card a {
+  color: #1976d2;
+  text-decoration: none;
+}
+
+.favorite-card a:hover {
+  text-decoration: underline;
+}
+
+.remove-btn {
+  margin-top: 1rem;
+  background-color: var(--secondary-purple);
+  color: white;
+  border: none;
+  padding: 0.5rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.remove-btn:hover {
+  background-color: #5a3e9a; /* Darker purple */
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.pagination button {
+  padding: 0.5rem 1.2rem;
+  background-color: var(--main-blue);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.pagination button:disabled {
+  background-color: #a0c3ff;
+  cursor: not-allowed;
+}
+
+.pagination button:hover:not(:disabled) {
+  background-color: #155a9a; /* Darker blue */
+}

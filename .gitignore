@@ -1,0 +1,45 @@
+# --- General ---
+.DS_Store
+Thumbs.db
+
+# --- Python / Flask Backend (server/) ---
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.db
+*.sqlite3
+.env
+confiq/key.env
+.venv/
+env/
+venv/
+*.log
+
+# --- Node / React Frontend (vite/) ---
+node_modules/
+dist/
+dist-ssr/
+*.local
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# --- Editor / IDE ---
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# --- Git ---
+*.orig
+*.patch
+
+server/confiq/key.env

@@ -1,0 +1,234 @@
+:root {
+  --einstein-blue: #1976d2;
+  --mentor-purple: #7e57c2;
+  --hitler-red: #c62828;
+  --white: #ffffff;
+  --text-dark: #2d2d2d;
+  --card-shadow: rgba(0, 0, 0, 0.12);
+  --glass-bg: rgba(255, 255, 255, 0.85);
+}
+
+/* ========== KEYFRAMES ========== */
+
+@keyframes fadeSlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+/* ========== SECTION LAYOUT ========== */
+
+.personalities-section {
+  padding: 60px 20px;
+  background: #f4f6fb;
+  text-align: center;
+  min-height: 100vh;
+}
+
+/* ========== TITLES ========== */
+
+.section-title {
+  font-size: 34px;
+  font-weight: 800;
+  color: var(--einstein-blue);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  animation: fadeDown 0.8s ease;
+}
+
+.section-subtitle {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 40px;
+  opacity: 0.8;
+}
+
+/* ========== GRID LAYOUT ========== */
+
+.personalities-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 30px;
+}
+
+/* ========== CARD BASE ========== */
+
+.personality-card {
+  background: var(--white);
+  border-radius: 18px;
+  box-shadow: 0 6px 18px var(--card-shadow);
+  padding: 25px;
+  transition: all 0.35s ease;
+  overflow: hidden;
+  opacity: 0;
+  animation: fadeSlideUp 0.8s ease forwards;
+}
+
+.personalities-grid .personality-card:nth-child(1) {
+  animation-delay: 0.1s;
+}
+.personalities-grid .personality-card:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.personalities-grid .personality-card:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+.personality-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  background: var(--glass-bg);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* ========== IMAGES ========== */
+
+.personality-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  transition: transform 0.4s ease;
+  animation: float 3.5s ease-in-out infinite;
+}
+
+.personality-card:hover img {
+  transform: scale(1.07) rotate(0.2deg);
+}
+
+/* ========== TEXT ========== */
+
+.personality-card h3 {
+  font-size: 22px;
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+
+.role {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.personality-card p {
+  font-size: 15px;
+  color: var(--text-dark);
+  line-height: 1.5;
+  margin-bottom: 18px;
+}
+
+/* ========== BUTTONS ========== */
+
+.personality-card button {
+  padding: 10px 22px;
+  border-radius: 25px;
+  border: none;
+  color: var(--white);
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.personality-card button::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.4s ease, height 0.4s ease;
+}
+
+.personality-card button:active::after {
+  width: 200%;
+  height: 200%;
+}
+
+/* ========== THEMES ========== */
+
+.einstein-theme h3,
+.einstein-theme .role {
+  color: var(--einstein-blue);
+}
+.einstein-theme button {
+  background: var(--einstein-blue);
+}
+.einstein-theme button:hover {
+  background: #1255a5;
+}
+
+.mentor-theme h3,
+.mentor-theme .role {
+  color: var(--mentor-purple);
+}
+.mentor-theme button {
+  background: var(--mentor-purple);
+}
+.mentor-theme button:hover {
+  background: #5e3cb1;
+}
+
+.hitler-theme h3,
+.hitler-theme .role {
+  color: var(--hitler-red);
+}
+.hitler-theme button {
+  background: var(--hitler-red);
+}
+.hitler-theme button:hover {
+  background: #8e1c1c;
+}
+
+/* ========== DISCLAIMER ========== */
+
+.disclaimer {
+  margin-top: 60px;
+  font-size: 14px;
+  color: #333;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+  background: #fff8e1;
+  padding: 16px 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+  animation: fadeSlideUp 0.6s ease forwards;
+  animation-delay: 0.5s;
+  opacity: 0;
+}
+
+/* ========== AOS (if used) ========== */
+/* No extra styles needed unless customizing further */

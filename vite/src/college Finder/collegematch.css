@@ -1,0 +1,181 @@
+:root {
+  --main-blue: #1976d2;
+  --secondary-purple: #7e57c2;
+  --light-purple: #ede7f6;
+  --light-blue: #e3f2fd;
+  --background-white: #ffffff;
+  --text-color: #333;
+  --border-radius: 10px;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: #f0f2f8;
+  color: var(--text-color);
+  margin: 0;
+  padding: 0;
+}
+
+.college-match-container {
+  max-width: 1000px;
+  margin: auto;
+  padding: 2rem;
+}
+
+h1 {
+  color: var(--main-blue);
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+input[type="text"],
+input[type="range"],
+input[type="radio"],
+input[type="checkbox"],
+textarea,
+select {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0 20px;
+  border: 1px solid #ccc;
+  border-radius: var(--border-radius);
+  box-sizing: border-box;
+  font-size: 1rem;
+  transition: border 0.2s ease;
+}
+
+input[type="text"]:focus,
+textarea:focus {
+  border: 1px solid var(--main-blue);
+  outline: none;
+}
+
+textarea {
+  resize: vertical;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+  width: auto;
+  margin-right: 0.5rem;
+}
+
+label {
+  display: block;
+  margin-top: 12px;
+  font-weight: 600;
+  color: var(--secondary-purple);
+}
+
+button {
+  background: linear-gradient(to right, var(--main-blue), var(--secondary-purple));
+  color: white;
+  padding: 10px 24px;
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  margin: 0.5rem 0.5rem 0.5rem 0;
+  box-shadow: var(--shadow);
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+  transform: scale(1.03);
+  background: linear-gradient(to right, #1565c0, #6a1b9a);
+}
+
+button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+.college-form {
+  background: var(--background-white);
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  margin-bottom: 2rem;
+}
+
+.recommendation-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.recommendation-card {
+  background: linear-gradient(to right, var(--light-blue), var(--light-purple));
+  padding: 1.5rem;
+  border: 1px solid #ddd;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  transition: transform 0.2s ease;
+}
+
+.recommendation-card:hover {
+  transform: translateY(-4px);
+}
+
+.recommendation-card h2 {
+  margin-top: 0;
+  color: var(--main-blue);
+}
+
+.recommendation-card p {
+  margin: 0.5rem 0;
+  line-height: 1.6;
+}
+
+.recommendation-card a {
+  color: var(--secondary-purple);
+  text-decoration: none;
+  word-break: break-all;
+}
+
+.recommendation-card a:hover {
+  text-decoration: underline;
+}
+
+.button-group {
+  margin-top: 1rem;
+  display: flex;
+  gap: 1rem;
+}
+
+/* Form Section Titles */
+.section-title {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: var(--main-blue);
+  margin-bottom: 0.5rem;
+}
+
+/* World Map Section */
+.worldmap-toggle {
+  margin: 1rem 0;
+  color: var(--secondary-purple);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+}
+
+.worldmap-toggle input {
+  margin-right: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .college-form,
+  .recommendation-card {
+    padding: 1rem;
+  }
+
+  .button-group {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
