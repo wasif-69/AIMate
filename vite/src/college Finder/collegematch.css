@@ -1,181 +1,191 @@
-:root {
-  --main-blue: #1976d2;
-  --secondary-purple: #7e57c2;
-  --light-purple: #ede7f6;
-  --light-blue: #e3f2fd;
-  --background-white: #ffffff;
-  --text-color: #333;
-  --border-radius: 10px;
-  --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  --font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-}
-
-body {
-  font-family: var(--font-family);
-  background-color: #f0f2f8;
-  color: var(--text-color);
-  margin: 0;
-  padding: 0;
-}
-
 .college-match-container {
-  max-width: 1000px;
-  margin: auto;
-  padding: 2rem;
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 1.5rem 2rem;
+  background-color: #f9fafc;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(25, 118, 210, 0.15);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
 }
 
-h1 {
-  color: var(--main-blue);
-  margin-bottom: 2rem;
+/* FORM STYLES */
+.college-form h1 {
   text-align: center;
+  color: #1976d2;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
 }
 
-input[type="text"],
-input[type="range"],
-input[type="radio"],
-input[type="checkbox"],
-textarea,
-select {
+.college-form input[type="text"],
+.college-form textarea,
+.college-form input[type="range"] {
   width: 100%;
-  padding: 12px;
-  margin: 10px 0 20px;
-  border: 1px solid #ccc;
-  border-radius: var(--border-radius);
-  box-sizing: border-box;
+  padding: 0.6rem 0.8rem;
+  margin: 0.5rem 0 1rem 0;
+  border: 1.5px solid #ccc;
+  border-radius: 6px;
   font-size: 1rem;
-  transition: border 0.2s ease;
-}
-
-input[type="text"]:focus,
-textarea:focus {
-  border: 1px solid var(--main-blue);
-  outline: none;
-}
-
-textarea {
+  transition: border-color 0.3s ease;
   resize: vertical;
 }
 
-input[type="checkbox"],
-input[type="radio"] {
-  width: auto;
-  margin-right: 0.5rem;
+.college-form input[type="text"]:focus,
+.college-form textarea:focus,
+.college-form input[type="range"]:focus {
+  border-color: #1976d2;
+  outline: none;
 }
 
-label {
+/* Checkboxes and Radios */
+.college-form label {
   display: block;
-  margin-top: 12px;
+  margin: 0.6rem 0 0.3rem;
   font-weight: 600;
-  color: var(--secondary-purple);
-}
-
-button {
-  background: linear-gradient(to right, var(--main-blue), var(--secondary-purple));
-  color: white;
-  padding: 10px 24px;
-  border: none;
-  border-radius: var(--border-radius);
+  color: #1976d2;
   cursor: pointer;
-  font-size: 1rem;
-  font-weight: 500;
-  margin: 0.5rem 0.5rem 0.5rem 0;
-  box-shadow: var(--shadow);
-  transition: background 0.3s ease, transform 0.2s ease;
 }
 
-button:hover {
-  transform: scale(1.03);
-  background: linear-gradient(to right, #1565c0, #6a1b9a);
+.college-form input[type="checkbox"],
+.college-form input[type="radio"] {
+  margin-right: 0.5rem;
+  cursor: pointer;
 }
 
-button:disabled {
-  background: #ccc;
+/* Scholarship label */
+.college-form label[for="scholarship"],
+.college-form label:nth-of-type(n) {
+  font-weight: 600;
+}
+
+/* Buttons */
+.college-form button {
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  padding: 0.8rem 1.8rem;
+  font-size: 1.1rem;
+  border-radius: 7px;
+  cursor: pointer;
+  font-weight: 700;
+  margin-top: 1rem;
+  transition: background-color 0.3s ease;
+  width: 100%;
+}
+
+.college-form button:hover:not(:disabled) {
+  background-color: #155a9a; /* Darker blue */
+}
+
+.college-form button:disabled {
+  background-color: #a0c3ff;
   cursor: not-allowed;
 }
 
-.college-form {
-  background: var(--background-white);
-  padding: 2rem;
-  border-radius: var(--border-radius);
-  box-shadow: var(--shadow);
-  margin-bottom: 2rem;
-}
-
+/* Recommendation list */
 .recommendation-list {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+  display: grid;
+  gap: 1.5rem;
 }
 
 .recommendation-card {
-  background: linear-gradient(to right, var(--light-blue), var(--light-purple));
-  padding: 1.5rem;
-  border: 1px solid #ddd;
-  border-radius: var(--border-radius);
-  box-shadow: var(--shadow);
-  transition: transform 0.2s ease;
-}
-
-.recommendation-card:hover {
-  transform: translateY(-4px);
+  border: 2px solid #1976d2;
+  border-radius: 10px;
+  padding: 1.5rem 2rem;
+  background-color: #e3f2fd;
+  box-shadow: 0 3px 8px rgba(25, 118, 210, 0.15);
 }
 
 .recommendation-card h2 {
   margin-top: 0;
-  color: var(--main-blue);
+  margin-bottom: 0.7rem;
+  color: #1976d2;
+  font-weight: 700;
 }
 
 .recommendation-card p {
-  margin: 0.5rem 0;
-  line-height: 1.6;
+  margin: 0.3rem 0;
+  font-size: 1rem;
+  color: #222;
 }
 
 .recommendation-card a {
-  color: var(--secondary-purple);
+  color: #1976d2;
   text-decoration: none;
-  word-break: break-all;
 }
 
 .recommendation-card a:hover {
   text-decoration: underline;
 }
 
+/* Buttons inside recommendation */
 .button-group {
   margin-top: 1rem;
   display: flex;
   gap: 1rem;
 }
 
-/* Form Section Titles */
-.section-title {
-  font-size: 1.1rem;
-  font-weight: bold;
-  color: var(--main-blue);
-  margin-bottom: 0.5rem;
-}
-
-/* World Map Section */
-.worldmap-toggle {
-  margin: 1rem 0;
-  color: var(--secondary-purple);
+.button-group button {
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  padding: 0.5rem 1.3rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
   font-weight: 600;
-  display: flex;
-  align-items: center;
+  transition: background-color 0.3s ease;
+  flex-grow: 1;
 }
 
-.worldmap-toggle input {
-  margin-right: 10px;
+.button-group button:hover {
+  background-color: #155a9a;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-  .college-form,
+/* For map toggle label */
+.college-form label:last-of-type {
+  margin-top: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+/* Responsive */
+@media (max-width: 700px) {
+  .college-match-container {
+    padding: 1rem 1rem;
+  }
+
+  .recommendation-list {
+    display: flex;
+    flex-direction: column;
+  }
+
   .recommendation-card {
-    padding: 1rem;
+    padding: 1rem 1.2rem;
   }
 
   .button-group {
     flex-direction: column;
-    gap: 0.5rem;
   }
+
+  .button-group button {
+    width: 100%;
+  }
+}
+
+/* Simple loading spinner (optional, if you want spinner instead of text) */
+/* Example spinner */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading-spinner {
+  width: 18px;
+  height: 18px;
+  border: 3px solid #ddd;
+  border-top-color: #1976d2;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 8px;
 }
