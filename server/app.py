@@ -29,22 +29,21 @@ Audio_folder = "./uploads"
 os.makedirs(Audio_folder, exist_ok=True)
 
 
-@app.route('/chat',methods=["POST"])
+@app.route('/chat', methods=["POST"])
 def replay():
+    try:
+        data = request.json
 
-    data=request.json
+        message = data.get("message")
+        model_info = data.get("ID")
+        history = data.get("history", [])
 
-    message = data.get("message")
-    data = data.get("ID")
-    history=data.get("history")
+        if model_info != "none":
+            goals = model_info.get("Goals", "")
+            style = model_info.get("style", "")
+            type_of_model = model_info.get("type", "")
 
-    if data!="none":
-        goals = data.get("Goals", "")
-        style = data.get("style", "")
-        type_of_model = data.get("type", "")
-
-        # Build dynamic system prompt
-        system_prompt = f"""
+            system_prompt = f"""
 You are an AI model called AImate.
 - Model Type: {type_of_model}
 - Style: {style}
@@ -52,34 +51,48 @@ You are an AI model called AImate.
 
 Stay consistent with this role while chatting. 
 Be friendly, supportive, and context-aware.
-Try often to use remeber user it's goal and previous text
+Try often to remember the user's goals and previous messages.
+"""
+        else:
+            system_prompt = """
+A short description of the university and a common question asked about it.
+Example: "You want to know scholarship plans at Howard University."
 """
 
-    system_prompt="""
-    a short description of the uni
-also the user a most qutioned question related to that university 
-like example
- 'You want to know scholarship plans at howard university etc'
-"""
+        # Start building the message list
+        messages = [{"role": "system", "content": system_prompt.strip()}]
 
-    response = client.chat.completions.create(
-    model="gpt-3.5-turbo",
-    messages=[
-        {"role": "system", "content": system_prompt.strip()},
-        {"role":"system", "content":history},
-        {"role": "user", "content": message}
-    ],
-    max_tokens=150
-)
+        # Append chat history if any
+        if isinstance(history, list):
+            for item in history:
+                role = item.get("role", "user")  # default to 'user'
+                content = item.get("content", "")
+                if content:  # Avoid empty messages
+                    messages.append({"role": role, "content": content})
 
-    ai_message = response.choices[0].message.content
+        # Add current user message
+        messages.append({"role": "user", "content": message})
 
-    return jsonify({
-        "id":1234567,
-        "message":ai_message
-        
-    })
+        # Send to OpenAI
+        response = client.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=messages,
+            max_tokens=150
+        )
 
+        ai_message = response.choices[0].message.content
+
+        return jsonify({
+            "id": 1234567,
+            "message": ai_message
+        })
+
+    except Exception as e:
+        print("Error in /chat:", str(e))
+        return jsonify({
+            "status": "error",
+            "message": str(e)
+        }), 500
 
 
 @app.route('/live',methods=["POST"])
