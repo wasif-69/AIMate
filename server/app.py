@@ -36,6 +36,7 @@ def replay():
 
     message = data.get("message")
     data = data.get("ID")
+    history=data.get("history")
 
     if data!="none":
         goals = data.get("Goals", "")
@@ -51,7 +52,7 @@ You are an AI model called AImate.
 
 Stay consistent with this role while chatting. 
 Be friendly, supportive, and context-aware.
-Try often to use remeber user it's goal
+Try often to use remeber user it's goal and previous text
 """
 
     system_prompt="""
@@ -62,12 +63,13 @@ like example
 """
 
     response = client.chat.completions.create(
-    model="gpt-4.1-mini",
+    model="gpt-3.5-turbo",
     messages=[
         {"role": "system", "content": system_prompt.strip()},
+        {"role":"system", "content":history},
         {"role": "user", "content": message}
     ],
-    max_tokens=200
+    max_tokens=150
 )
 
     ai_message = response.choices[0].message.content

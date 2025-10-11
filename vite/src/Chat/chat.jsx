@@ -8,7 +8,7 @@ import {
   orderBy,
   onSnapshot,
   doc,
-  getDoc,
+  getDoc, limit, getDocs 
 } from "firebase/firestore";
 import "./Chat.css";
 import EmojiPicker from "emoji-picker-react";
@@ -109,15 +109,26 @@ export default function Chat() {
     }
   };
 
+  const getFirstThreeDocs=async(uid)=> {
+  const q = query(collection(db, "Student",uid,'models',modelId,'Chat'), limit(3));
+  const querySnapshot = await getDocs(q);
+
+  const docs = querySnapshot.docs.map(doc => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
+
+  return docs; // array of first three documents
+}
   const sendMessageToAPI = async (userText) => {
     try {
       const fetched_data = await fetch_data();
       if (!fetched_data) throw new Error("No model data found");
-
+      const history=getFirstThreeDocs(auth.currentUser.uid)
       const response = await fetch("https://aimate-7rdt.onrender.com/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: userText, ID: fetched_data }),
+        body: JSON.stringify({ message: userText, ID: fetched_data,history:history }),
       });
 
       const data = await response.json();
