@@ -117,7 +117,7 @@ export default function Chat() {
     id: doc.id,
     ...doc.data(),
   }));
-
+  console.log(docs)
   return docs; // array of first three documents
 }
   const sendMessageToAPI = async (userText) => {
