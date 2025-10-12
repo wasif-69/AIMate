@@ -13,6 +13,24 @@ export default function Header_chat() {
   const [goals, setGoals] = useState("");
   const [showGoals, setShowGoals] = useState(false);
 
+  // Return emoji based on chat style
+  const getStyleEmoji = (style) => {
+    switch (style.toLowerCase()) {
+      case "introvert":
+        return "🧘‍♂️";
+      case "extrovert":
+        return "🎉";
+      case "professional":
+        return "💼";
+      case "friendly":
+        return "😊";
+      case "funny":
+        return "😂";
+      default:
+        return "🤖"; // Default emoji
+    }
+  };
+
   useEffect(() => {
     const getData = async () => {
       try {
@@ -41,10 +59,7 @@ export default function Header_chat() {
     <div className="chat-header-bar">
       <div className="info-group">
         <span className="info">
-          <strong>📘 Name:</strong> {modelname}
-        </span>
-        <span className="info">
-          <strong>🎨 Style:</strong> {chatStyle}
+          {getStyleEmoji(chatStyle)} {modelname}
         </span>
       </div>
 

@@ -11,7 +11,7 @@ import {
 import { useParams } from "react-router-dom";
 import { savemessage } from "../Firebase/SAVEMessage";
 import EmojiPicker from "emoji-picker-react"; // ✅ NEW IMPORT
-import "./chat_input.css"; // Make sure you style emoji btn etc.
+import "./chat_Input.css"; // Make sure you style emoji btn etc.
 
 export default function Chat_Input({ setIsLoading, isLoading }) {
   const [text, setText] = useState("");
