@@ -23,6 +23,9 @@ import Summurizer from "./Test/Summurizer";
 import Collegematch from "./college Finder/collegematch";
 import WorldMap from "./college Finder/map";
 import Favourite from "./college Finder/favourite";
+import Header_chat from "./Chat/header_chat";
+import Chat_text from "./Chat/chat_text";
+import CHAT from "./Chat/chat";
 
 function App() {
   // fixed naming: personality + setPersonality
@@ -52,7 +55,7 @@ function App() {
 
         {/* Models */}
         <Route path="/createmodel" element={<ModelForm />} />
-        <Route path="/chat/:modelId" element={<Chat />} />
+        <Route path="/chat/:modelId" element={<CHAT/>} />
         <Route
           path="/chatModels"
           element={
@@ -86,12 +89,9 @@ function App() {
           }
         />
 
-        <Route path="/userchat/:uid" element={<UserChat/>} />
+        <Route path="/userchat/:uid" element={<CHAT/>} />
 
-        <Route path="/feedback" element={<>
-        <Feedback/>
-        <Footer />
-        </>} />
+        <Route path="/feedback" element={<><Feedback/><Footer /></>} />
 
         <Route path="/community" element={<Comunity/>}  />
         <Route path="/com" element={<Allcumminty/>}  />
@@ -101,6 +101,8 @@ function App() {
 
         <Route path="/college" element={<Collegematch/>} />
         <Route path="/map" element={<WorldMap/>} />
+
+
 
        </Routes>
        </AnimatePresence>

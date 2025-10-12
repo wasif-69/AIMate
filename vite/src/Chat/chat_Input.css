@@ -1,0 +1,127 @@
+.chat-input {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 24px;
+  border-top: 2px solid #e0e0e0;
+  background-color: #ffffff;
+  position: sticky;
+  bottom: 0;
+  z-index: 50;
+}
+
+/* Input styling */
+.chat-input input {
+  flex: 1;
+  padding: 12px 16px;
+  font-size: 1rem;
+  border: 2px solid #ccc;
+  border-radius: 999px;
+  outline: none;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+}
+
+.chat-input input:focus {
+  border-color: #7e57c2;
+  box-shadow: 0 0 0 3px rgba(126, 87, 194, 0.2);
+}
+
+/* Send button */
+.chat-input button {
+  background-color: #7e57c2;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 999px;
+  border: none;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.chat-input button:hover:not(:disabled) {
+  background-color: #6841aa;
+  transform: scale(1.05);
+}
+
+.chat-input button:disabled {
+  background-color: #b49dd3;
+  cursor: not-allowed;
+}
+
+/* Responsive tweak */
+@media screen and (max-width: 600px) {
+  .chat-input {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding: 12px 16px;
+  }
+
+  .chat-input input {
+    width: 100%;
+  }
+
+  .chat-input button {
+    width: 100%;
+  }
+}
+
+.chat-input-container {
+  position: relative;
+}
+
+.chat-input {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 24px;
+  border-top: 2px solid #eee;
+  background-color: #fff;
+}
+
+.chat-input input {
+  flex: 1;
+  padding: 12px 16px;
+  border-radius: 999px;
+  border: 2px solid #ccc;
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.2s;
+}
+
+.chat-input input:focus {
+  border-color: #7e57c2;
+  box-shadow: 0 0 0 3px rgba(126, 87, 194, 0.2);
+}
+
+.chat-input button {
+  background-color: #7e57c2;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 999px;
+  border: none;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.chat-input button:hover:not(:disabled) {
+  background-color: #6841aa;
+  transform: scale(1.05);
+}
+
+.emoji-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.emoji-picker-popup {
+  position: absolute;
+  bottom: 70px;
+  left: 20px;
+  z-index: 999;
+}

@@ -1,0 +1,152 @@
+.chat-header-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #7e57c2; /* Purple theme */
+  color: white;
+  padding: 12px 20px;
+  border-radius: 0 0 12px 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  font-family: 'Segoe UI', sans-serif;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  flex-wrap: wrap;
+}
+
+/* Info section */
+.info-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.info {
+  font-size: 15px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.info strong {
+  color: #fff;
+  margin-right: 4px;
+}
+
+/* Buttons section */
+.button-group {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* Back button */
+.back-btn {
+  background-color: #ffffff;
+  color: #7e57c2;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s ease-in-out;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.back-btn:hover {
+  background-color: #f3e6ff;
+  transform: translateY(-2px);
+}
+
+/* Dropdown styling */
+.dropdown {
+  position: relative;
+}
+
+.dropdown-btn {
+  background-color: #ffffff;
+  color: #7e57c2;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dropdown-btn:hover {
+  background-color: #f3e6ff;
+  transform: translateY(-2px);
+}
+
+.chevron {
+  font-size: 12px;
+}
+
+/* Dropdown content */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  top: 110%;
+  right: 0;
+  background-color: white;
+  color: #333;
+  padding: 12px 16px;
+  width: 250px;
+  border-radius: 10px;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+  font-size: 14px;
+  animation: fadeIn 0.2s ease-in-out;
+  z-index: 999;
+  text-align: left;
+}
+
+.dropdown-content p {
+  margin: 0;
+  line-height: 1.4;
+}
+
+.dropdown-content.show {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsiveness */
+@media screen and (max-width: 600px) {
+  .chat-header-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .info-group {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .dropdown-content {
+    right: auto;
+    left: 0;
+    width: 90vw;
+  }
+
+  .button-group {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
