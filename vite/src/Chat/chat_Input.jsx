@@ -15,12 +15,9 @@ import "./chat_Input.css"; // Make sure you style emoji btn etc.
 
 export default function Chat_Input({ setIsLoading, isLoading }) {
   const [text, setText] = useState("");
-  const [showEmojiPicker, setShowEmojiPicker] = useState(false); // ✅ Emoji toggle
   const { modelId } = useParams();
 
-  const handleEmojiClick = (emojiData) => {
-    setText((prev) => prev + emojiData.emoji);
-  };
+
 
   const send = async () => {
     if (!text.trim() || isLoading) return;
@@ -91,20 +88,7 @@ export default function Chat_Input({ setIsLoading, isLoading }) {
   return (
     <div className="chat-input-container">
       <div className="chat-input">
-        {/* Emoji button */}
-        <button
-          className="emoji-btn"
-          onClick={() => setShowEmojiPicker((prev) => !prev)}
-        >
-          😊
-        </button>
-
-        {/* Emoji Picker */}
-        {showEmojiPicker && (
-          <div className="emoji-picker-popup">
-            <EmojiPicker onEmojiClick={handleEmojiClick} theme="light" />
-          </div>
-        )}
+        
 
         {/* Input Field */}
         <input

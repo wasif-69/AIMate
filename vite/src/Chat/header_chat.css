@@ -1,145 +1,96 @@
-.chat-header-bar {
+.chat-headerr {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #7e57c2; /* Purple main */
-  color: white;
-  padding: 10px 16px;
-  border-radius: 0 0 10px 10px;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
-  font-family: 'Segoe UI', sans-serif;
+  padding: 12px 20px;
+  background: linear-gradient(90deg, #7e57c2 0%, #1976d2 100%);
+  color: #ffffff;
   position: sticky;
   top: 0;
-  z-index: 100;
-  flex-wrap: wrap;
-  min-height: 56px;
+  z-index: 1000;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* Info section */
-.info-group {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  font-size: 14px;
-}
-
-.info {
-  white-space: nowrap;
-}
-
-.info strong {
-  font-weight: 600;
-  margin-right: 4px;
-}
-
-/* Button section */
-.button-group {
+/* Left side (emoji + name) */
+.chat-info {
   display: flex;
   align-items: center;
-  gap: 12px;
+  font-size: 18px;
+  font-weight: 600;
 }
 
-/* Back button */
-.back-btn {
-  background-color: white;
-  color: #7e57c2;
-  border: none;
-  padding: 6px 12px;
-  font-size: 14px;
-  border-radius: 999px;
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+.chat-name {
+  display: flex;
+  align-items: center;
+  font-size: 17px;
+  gap: 8px;
 }
 
-.back-btn:hover {
-  background-color: #f2e6ff;
-  transform: translateY(-1px);
+.chat-name::before {
+  content: attr(data-emoji);
+  font-size: 22px;
 }
 
-/* Dropdown */
-.dropdown {
+/* Right side (Goals button) */
+.chat-actions {
   position: relative;
 }
 
-.dropdown-btn {
-  background-color: white;
-  color: #7e57c2;
+/* Goals button */
+.goals-button {
+  background: rgba(255, 255, 255, 0.15);
   border: none;
-  padding: 6px 12px;
+  color: #fff;
+  padding: 8px 14px;
   font-size: 14px;
-  border-radius: 999px;
+  font-weight: 500;
+  border-radius: 20px;
   cursor: pointer;
-  transition: all 0.2s ease-in-out;
   display: flex;
   align-items: center;
-  gap: 4px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+  gap: 6px;
+  transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
-.dropdown-btn:hover {
-  background-color: #f2e6ff;
-  transform: translateY(-1px);
+.goals-button:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(1.03);
 }
 
+/* Down/up arrow next to "Goals" */
 .chevron {
-  font-size: 12px;
+  font-size: 10px;
 }
 
-/* Dropdown content */
-.dropdown-content {
-  display: none;
+/* Dropdown box */
+.goals-content {
   position: absolute;
-  top: 105%;
   right: 0;
-  background-color: white;
+  top: 42px;
+  background-color: #ffffff !important;
   color: #333;
-  padding: 12px;
-  width: 240px;
+  padding: 12px 16px;
   border-radius: 8px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-  font-size: 13.5px;
-  animation: fadeIn 0.2s ease;
-  z-index: 999;
-}
-
-.dropdown-content p {
-  margin: 0;
+  min-width: 220px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+  font-size: 14px;
   line-height: 1.5;
 }
 
-.dropdown-content.show {
-  display: block;
+/* Optional: transition animation */
+.goals-content {
+  animation: fadeIn 0.2s ease-in-out;
 }
 
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(-6px);
+    transform: translateY(-5px);
   }
   to {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-/* Responsive */
-@media screen and (max-width: 600px) {
-  .chat-header-bar {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-    padding: 12px;
-  }
-
-  .button-group {
-    width: 100%;
-    justify-content: space-between;
-  }
-
-  .dropdown-content {
-    left: 0;
-    right: auto;
-    width: 90vw;
   }
 }

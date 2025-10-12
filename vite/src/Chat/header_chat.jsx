@@ -1,19 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import { auth, db } from "../Firebase/firebaseConfig";
-import { doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc } from "firebase/firestore";
 import "./header_chat.css";
 
-export default function Header_chat() {
+export default function HeaderChat() {
   const { modelId } = useParams();
   const navigate = useNavigate();
 
-  const [modelname, setModelname] = useState("");
+  const [modelName, setModelName] = useState("");
   const [chatStyle, setChatStyle] = useState("");
   const [goals, setGoals] = useState("");
   const [showGoals, setShowGoals] = useState(false);
 
-  // Return emoji based on chat style
   const getStyleEmoji = (style) => {
     switch (style.toLowerCase()) {
       case "introvert":
@@ -27,21 +26,27 @@ export default function Header_chat() {
       case "funny":
         return "😂";
       default:
-        return "🤖"; // Default emoji
+        return "🤖";
     }
   };
 
   useEffect(() => {
-    const getData = async () => {
+    const fetchData = async () => {
       try {
-        const docRef = doc(db, 'Student', auth.currentUser.uid, 'models', modelId);
-        const data = await getDoc(docRef);
+        const docRef = doc(
+          db,
+          "Student",
+          auth.currentUser.uid,
+          "models",
+          modelId
+        );
+        const docSnap = await getDoc(docRef);
 
-        if (data.exists()) {
-          const docData = data.data();
-          setModelname(docData.name_model || "");
-          setChatStyle(docData.counselor || "");
-          setGoals(docData.Goals || "");
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          setModelName(data.name_model || "");
+          setChatStyle(data.counselor || "");
+          setGoals(data.Goals || "");
         } else {
           console.log("No such document!");
         }
@@ -50,30 +55,33 @@ export default function Header_chat() {
       }
     };
 
-    getData();
+    fetchData();
   }, [modelId]);
 
-  const handleBack = () => navigate("/chatModels");
-
   return (
-    <div className="chat-header-bar">
-      <div className="info-group">
-        <span className="info">
-          {getStyleEmoji(chatStyle)} {modelname}
+    <div className="chat-headerr" >
+      <div className="chat-info">
+        
+        <span className="chat-name" data-emoji={getStyleEmoji(chatStyle)}>
+          {modelName}
         </span>
       </div>
 
-      <div className="button-group">
-        <div className="dropdown">
-          <button className="dropdown-btn" onClick={() => setShowGoals(!showGoals)}>
+      <div className="chat-actions">
+        <div className="goals-dropdown">
+          <button
+            className="goals-button"
+            onClick={() => setShowGoals(!showGoals)}
+            aria-expanded={showGoals}
+          >
             🎯 Goals <span className="chevron">{showGoals ? "▲" : "▼"}</span>
           </button>
-          <div className={`dropdown-content ${showGoals ? "show" : ""}`}>
-            <p>{goals}</p>
-          </div>
+          {showGoals && (
+            <div className="goals-content">
+              <p>{goals}</p>
+            </div>
+          )}
         </div>
-
-        <button className="back-btn" onClick={handleBack}>⏪ Back</button>
       </div>
     </div>
   );
