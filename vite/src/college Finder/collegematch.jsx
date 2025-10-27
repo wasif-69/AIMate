@@ -179,7 +179,7 @@ export default function CollegeMatch() {
                 <strong>Location:</strong> {rec.location}
               </p>
               <p>
-                <strong>Scholarship:</strong> {rec.scholarship}
+                <strong>Scholarship upto:</strong> {rec.scholarship}
               </p>
               <a
                 href={rec.official_website}
