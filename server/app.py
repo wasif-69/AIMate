@@ -393,7 +393,7 @@ def uniFinder():
 
         prompt = """
 You are an expert AI academic advisor specializing in global university admissions and scholarships. 
-Your task is to recommend 3 universities that best fit a student's background, academic performance, financial situation, and personal goals.
+Your task is to recommend 3 universities where a student has a realistic chance of admission (up to ~50% acceptance rate) based on their background, academic performance, financial situation, and personal goals.
 
 You must return your response strictly in the following JSON format — do NOT include any explanation, markdown, or natural text outside the JSON block.
 
@@ -414,7 +414,11 @@ Each university recommendation must include the following fields:
   ]
 }
 
-Only return valid JSON. Do not wrap the JSON in markdown or add any text before or after the JSON.
+Constraints:
+1. Only recommend universities where the student has a realistic chance of admission (Admission chances ≤ 50%).
+2. Do not include extremely competitive universities with acceptance rates below 20% unless the student’s profile strongly matches.
+3. Prioritize universities with reasonable admission chances and relevant scholarships.
+4. Only return valid JSON. Do not wrap the JSON in markdown or add any text before or after the JSON.
 """
 
 

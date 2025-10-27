@@ -27,6 +27,7 @@ import Header_chat from "./Chat/header_chat";
 import Chat_text from "./Chat/chat_text";
 import CHAT from "./Chat/chat";
 
+
 function App() {
   // fixed naming: personality + setPersonality
   const [personality, setPersonality] = useState("Einstein");
