@@ -405,7 +405,7 @@ Each university recommendation must include the following fields:
       "university": "Name",
       "location": "City, Country",
       "qs_ranking": 0,
-      "scholarship": "Max scholarship (in percentage) or financial aid available",
+      "scholarship upto": "20% or financial aid available",
       "application_deadline": "Approximate deadline (e.g. Jan 15)",
       "official_website": "URL or 'Not available'",
       "acceptance_rate": "Percentage or 'Not available'"
