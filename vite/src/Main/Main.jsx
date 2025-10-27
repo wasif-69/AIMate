@@ -9,6 +9,14 @@ export default function Main() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
+
+    const wakeup=async ()=>{
+      const response = await fetch("https://aimate-7rdt.onrender.com/ping");
+      console.log("API wake-up ping sent", response.status);
+    }
+
+    wakeup();
+
     const unsubscribe = auth.onAuthStateChanged((currentUser) => {
       setUser(currentUser);
     });

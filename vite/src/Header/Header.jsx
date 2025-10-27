@@ -60,10 +60,11 @@ export default function Header() {
       <Link to="/com"><button className="btn btn-outline">The Social Network!</button></Link>
       <Link to="/quicktest"><button className="btn btn-outline">Quick Test!</button></Link>
       <Link to="/chatModels"><button className="btn btn-outline">Model Chat</button></Link>
+      <Link to="/college"><button className="btn btn-outline">College Finder</button></Link>
       {/* <Link to="/sum"><button className="btn btn-outline">Summarizer</button></Link> */}
       {/* <Link to="/aivoice"><button className="btn btn-outline">AI Voice</button></Link> */}
       <Link to="/feedback"><button className="btn btn-outline">Feedback</button></Link>
-      <Link to="/college"><button className="btn btn-outline">College Finder</button></Link>
+      
       <button className="btn btn-outline" onClick={handleLogout}>Logout</button>
     </>
   );

@@ -423,7 +423,7 @@ the user info is {form} and the acceptable counteries is {counteries}
     """
       
         response = client.chat.completions.create(
-    model="gpt-3.5-turbo",
+    model="gpt-4o-mini",
     messages=[
         {"role": "system", "content": prompt},
         {"role": "user", "content": user}
@@ -441,7 +441,9 @@ the user info is {form} and the acceptable counteries is {counteries}
         })    
 
 
-
+@app.route("/ping",methods=['GET'])
+def ping():
+    return jsonify({"status":"Done"})
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
